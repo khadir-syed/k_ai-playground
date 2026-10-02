@@ -1,5 +1,6 @@
 // The story: "Follow one sentence through AI". Picks a sentence, then walks it through each chapter.
 import { h } from './engine/dom.js';
+import { countPage, countEvent } from './engine/analytics.js';
 import { detect, downloadPlan, loadReplay, loadTokenizer, loadEmbedder } from './engine/runtime.js';
 import tokens from './chapters/01-tokens/chapter.js';
 import galaxy from './chapters/02-galaxy/chapter.js';
@@ -24,7 +25,8 @@ function show(index) {
   window.scrollTo(0, 0);
 
   if (index < 0) return intro();
-  if (index >= CHAPTERS.length) return finale();
+  if (index >= CHAPTERS.length) return countEvent('story-done'), finale();
+  countEvent(`chapter-${index + 1}`);
 
   const chapter = CHAPTERS[index];
   const body = h('div', { class: 'chapter-body' });
@@ -102,6 +104,7 @@ const footer = () => h('footer', { class: 'footer' }, 'Learning should not stop.
 
 function usePreset(preset) {
   Object.assign(state, { preset, sentence: preset.text });
+  countEvent('start-ready-made');
   show(0);
 }
 
@@ -113,6 +116,7 @@ async function startLocal(text, notice) {
     const update = () => (bar.value = (a + b) / 2);
     await Promise.all([loadTokenizer((p) => ((a = p), update())), loadEmbedder((p) => ((b = p), update()))]);
     Object.assign(state, { preset: null, sentence: text });
+    countEvent('start-own-words');
     show(0);
   } catch (err) {
     console.error(err);
@@ -141,6 +145,7 @@ function finale() {
 try {
   const [story, caps] = await Promise.all([loadReplay(), detect()]);
   Object.assign(state, { story, plan: downloadPlan(caps) });
+  countPage();
   show(-1);
 } catch (err) {
   console.error(err);

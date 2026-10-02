@@ -3,6 +3,7 @@ import { h, showToken, prefersReducedMotion } from '../../engine/dom.js';
 import { softmax, sample } from '../../engine/math.js';
 import { chatPromptIds, nextTokenOdds, isEndToken } from '../../engine/ai.js';
 import { loadLM } from '../../engine/runtime.js';
+import { countEvent } from '../../engine/analytics.js';
 
 const SHOW = 5;
 const MAX_TOKENS = 40;
@@ -63,6 +64,7 @@ export default {
       mode.replaceChildren(h('p', {}, 'Downloading the talking model…'), bar);
       try {
         lm = await loadLM((p) => (bar.value = p));
+        countEvent('live-model');
         await restart();
       } catch (err) {
         console.error(err);

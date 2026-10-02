@@ -39,6 +39,7 @@ Adding an origin here needs a reason in the PR. Today the full list is:
 | `https://avatars.githubusercontent.com` | `img-src` | the maintainer's GitHub profile photo in the brand header and favicon, same as the other k_ai sites (image only, no script) |
 | `https://cdn.jsdelivr.net` | `connect-src` | ONNX Runtime `.wasm` binary, exact pinned version (data, not script) |
 | `https://huggingface.co`, `https://*.hf.co` | `connect-src` | model files, exact pinned commit; `huggingface.co` redirects to `*.hf.co` |
+| `https://khadir-syed.goatcounter.com` | `connect-src` | cookie-free visit counts: page path and fixed event names only, live site only (see `engine/analytics.js`) |
 | `https://api.anthropic.com`, `https://api.openai.com` | `connect-src` | bring-your-own-key only, on pages that offer it |
 
 ## Code safety
@@ -55,7 +56,7 @@ Adding an origin here needs a reason in the PR. Today the full list is:
 
 ## Privacy & analytics
 - [ ] What a visitor types never leaves their browser, except to the AI provider they chose with their own key
-- [ ] Analytics (when enabled) is cookie-free GoatCounter, and records only page views and named events like `chapter-3-done` — never typed text, never keys
+- [ ] Analytics is cookie-free GoatCounter, sent by our own `engine/analytics.js` (never GoatCounter's script), and records only page views and the fixed event names in its `EVENTS` list — never typed text, never keys
 - [ ] Model downloads are opt-in and the size is shown before anything large is fetched on a phone
 
 ## Data

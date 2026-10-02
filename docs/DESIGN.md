@@ -20,7 +20,7 @@ file disagree, the code wins and this file gets fixed in the same PR.
 | Shared engine | `engine/` is imported by every chapter, and later by Jarvis | A's parts become C's parts, so a fix is made once |
 | Runtime tiers | Replay → Local → bring-your-own-key | A visitor never sees a broken screen, only a simpler mode |
 | Keys | Claude + OpenAI, in memory only, sent only to the two provider APIs | See [SECURITY_CHECKLIST.md](../SECURITY_CHECKLIST.md) |
-| Analytics | Cookie-free GoatCounter, with page views and named events only | No consent banner on a phone, and typed text is never collected. **Not added yet:** it arrives when the site goes public. |
+| Analytics | Cookie-free GoatCounter, with page views and named events only | No consent banner on a phone, and typed text is never collected. Sent by `engine/analytics.js` (GoatCounter's own script would break our CSP), only on the live `*.github.io` site. Events: `start-ready-made`, `start-own-words`, `chapter-1…3`, `live-model`, `story-done`, all prefixed `k_ai-playground/`. |
 | Language | English first | — |
 | Look and feel | The same warm stone and amber theme, brand header and "In short" card as [khadir-syed.github.io](https://khadir-syed.github.io/) and the other k_ai sites | One recognisable family across the series |
 | Gate to Phase C (Jarvis) | 10K visits a month **and** at least 40% of first-time visitors finishing the story. Stars are a bonus signal. | Measures the non-technical audience and actual learning, not just developer interest |
@@ -50,7 +50,7 @@ Plus the ONNX Runtime `.wasm` file: 27 MB with WebGPU, 14 MB without. Browsers c
 - **Images:** `img-src` allows only this site and `avatars.githubusercontent.com` (the maintainer's profile photo).
 - **Network:** `connect-src` allows exactly `cdn.jsdelivr.net` (the runtime `.wasm`),
   `huggingface.co` and `*.hf.co` (model files; the first redirects to the second). Bring-your-own-key
-  pages will add only `api.anthropic.com` and `api.openai.com`.
+  pages will add only `api.anthropic.com` and `api.openai.com`. Visit counts go to `khadir-syed.goatcounter.com`.
 - **Output:** everything goes on screen through `engine/dom.js` → `textContent`. Model output
   and visitor text are always treated as untrusted.
 - **Storage:** the site itself stores nothing. transformers.js caches downloaded model files

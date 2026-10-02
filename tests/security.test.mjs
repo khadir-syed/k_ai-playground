@@ -17,7 +17,7 @@ async function files(dir, ext) {
   return out;
 }
 
-const CSP = "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' https://avatars.githubusercontent.com; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.hf.co; worker-src 'self'; base-uri 'none'; form-action 'none'";
+const CSP = "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' https://avatars.githubusercontent.com; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.hf.co https://khadir-syed.goatcounter.com; worker-src 'self'; base-uri 'none'; form-action 'none'";
 
 test('every page has the strict CSP and no inline scripts or handlers', async () => {
   for (const page of await files('', '.html')) {
