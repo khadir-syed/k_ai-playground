@@ -1,6 +1,7 @@
 // The story: "Follow one sentence through AI". Picks a sentence, then walks it through each chapter.
 import { h } from './engine/dom.js';
 import { countPage, countEvent } from './engine/analytics.js';
+import { cardContent, drawCard, canvasToFile } from './engine/sharecard.js';
 import { detect, downloadPlan, loadReplay, loadTokenizer, loadEmbedder } from './engine/runtime.js';
 import tokens from './chapters/01-tokens/chapter.js';
 import galaxy from './chapters/02-galaxy/chapter.js';
@@ -9,7 +10,7 @@ import theater from './chapters/03-theater/chapter.js';
 const CHAPTERS = [tokens, galaxy, theater];
 const MAX_SENTENCE = 120;
 
-const state = { story: null, sentence: '', preset: null, plan: null };
+const state = { story: null, sentence: '', preset: null, plan: null, journey: {} };
 const stage = document.getElementById('stage');
 const dots = document.getElementById('progress');
 const tierBadge = document.getElementById('tier');
@@ -85,6 +86,46 @@ function intro() {
   );
 }
 
+// "My sentence's journey": drawn on this device; shared or saved only if the visitor chooses.
+function shareCard() {
+  const canvas = h('canvas', { class: 'share-preview', role: 'img', 'aria-label': `Your sentence’s journey through AI, as an image: “${state.sentence}”` });
+  const status = h('p', { class: 'muted', 'aria-live': 'polite' });
+  const buttons = h('div', { class: 'row' });
+  let file = null;
+
+  drawCard(canvas, cardContent(state.sentence, state.journey))
+    .then(() => canvasToFile(canvas))
+    .then((f) => {
+      file = f;
+      const canShare = navigator.canShare?.({ files: [f] });
+      const saveBtn = h('button', { class: canShare ? 'ghost' : 'primary', onclick: save }, '⬇ Save image');
+      buttons.replaceChildren(...(canShare ? [h('button', { class: 'primary', onclick: share }, '📤 Share')] : []), saveBtn);
+    })
+    .catch((err) => { console.error(err); status.textContent = 'Couldn’t make the image on this device.'; });
+
+  async function share() {
+    try {
+      await navigator.share({ files: [file], title: 'My sentence’s journey through AI', text: 'Follow your own sentence through AI:', url: location.href.split(/[?#]/)[0] });
+      countEvent('share-card-shared');
+    } catch (err) {
+      if (err.name !== 'AbortError') status.textContent = 'Sharing didn’t work here. Try “Save image” instead.';
+    }
+  }
+
+  function save() {
+    const url = URL.createObjectURL(file);
+    h('a', { href: url, download: file.name }).click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    countEvent('share-card-saved');
+    status.textContent = 'Saved. Nothing was uploaded — the image was made on your device.';
+  }
+
+  return h('section', { class: 'card share' },
+    h('h2', {}, 'Your sentence’s journey, as a picture'),
+    h('p', { class: 'muted' }, 'Made on your device. Nothing is uploaded unless you choose to share it.'),
+    canvas, buttons, status);
+}
+
 function brandHero() {
   return h('header', { class: 'hero brand compact' },
     h('div', { class: 'brand-frame' }, h('img', { src: 'https://avatars.githubusercontent.com/u/15974849?v=4&s=128', alt: 'Khadir', width: '56', height: '56' })),
@@ -103,7 +144,7 @@ function siblingLinks() {
 const footer = () => h('footer', { class: 'footer' }, 'Learning should not stop.');
 
 function usePreset(preset) {
-  Object.assign(state, { preset, sentence: preset.text });
+  Object.assign(state, { preset, sentence: preset.text, journey: {} });
   countEvent('start-ready-made');
   show(0);
 }
@@ -115,7 +156,7 @@ async function startLocal(text, notice) {
     let a = 0, b = 0;
     const update = () => (bar.value = (a + b) / 2);
     await Promise.all([loadTokenizer((p) => ((a = p), update())), loadEmbedder((p) => ((b = p), update()))]);
-    Object.assign(state, { preset: null, sentence: text });
+    Object.assign(state, { preset: null, sentence: text, journey: {} });
     countEvent('start-own-words');
     show(0);
   } catch (err) {
@@ -133,6 +174,7 @@ function finale() {
         h('li', {}, h('strong', {}, 'It became a place in a galaxy. '), 'Meaning is a position: similar ideas sit close together.'),
         h('li', {}, h('strong', {}, 'A reply was guessed, one token at a time. '), 'The AI doesn’t know answers — it predicts likely next pieces.')),
       h('p', { class: 'muted' }, 'Coming next in the playground: teach a model with your camera, run AI with the internet switched off — and meet Jarvis, an assistant built from these exact pieces.')),
+    shareCard(),
     h('nav', { class: 'story-nav' },
       h('button', { class: 'ghost', onclick: () => show(CHAPTERS.length - 1) }, '← Back'),
       h('button', { class: 'primary', onclick: () => show(-1) }, 'Try another sentence')),

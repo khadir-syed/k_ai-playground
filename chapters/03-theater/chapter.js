@@ -80,6 +80,7 @@ export default {
       playBtn.textContent = '▶ Play';
       step = 0; done = false; options = null;
       reply.replaceChildren(h('span', { class: 'cursor' }, '▍'));
+      state.journey.reply = '';
       ids = lm ? chatPromptIds(lm.tokenizer, state.sentence) : [];
       renderMode();
       await loadOptions();
@@ -116,6 +117,7 @@ export default {
         reply.querySelector('.new')?.classList.remove('new');
         reply.lastChild.before(h('span', { class: 'new' }, pick.text));
         ids.push(pick.id);
+        state.journey.reply += pick.text;
       }
       done = isEnd || step >= MAX_TOKENS || (!lm && !replay.steps[step]);
       if (done) { reply.lastChild.remove(); playing = false; playBtn.textContent = '▶ Play'; options = null; }

@@ -22,6 +22,9 @@ Part of the k_ai series:
 | 2 | [Meaning is a place](chapters/02-galaxy/) | Your sentence as a star in a 3D galaxy of meaning, next to its nearest neighbours | Replay · Local |
 | 3 | [AI is a guessing machine](chapters/03-theater/) | A reply built token by token, with live odds and a temperature slider — tap a bar to choose the next word yourself | Replay · Local |
 
+At the end, you get a picture of **your sentence's journey** to share or save. It's made on your
+device and nothing is uploaded.
+
 **No chapter needs an API key.** Ready-made sentences use recorded runs of real models and work
 instantly on any device. Typing your own sentence downloads small AI models into your browser
 (about 40–50 MB, plus about 115–130 MB for live chapter 3), after you agree to it. Nothing you
@@ -72,6 +75,7 @@ You need Python 3 (to serve the files) and Node.js 20+ (only for the self-checks
 | [`tools/`](tools/) | Offline scripts, such as re-recording replays. Never shipped to the site. |
 | [`tests/`](tests/) | Self-checks, including security rules |
 | [`docs/DESIGN.md`](docs/DESIGN.md) | Why it's built this way |
+| `og-image.png` | The picture shown when the link is shared ([source](tools/og-image.html)) |
 
 ## Contributing
 

@@ -58,6 +58,7 @@ Adding an origin here needs a reason in the PR. Today the full list is:
 - [ ] What a visitor types never leaves their browser, except to the AI provider they chose with their own key
 - [ ] Analytics is cookie-free GoatCounter, sent by our own `engine/analytics.js` (never GoatCounter's script), and records only page views and the fixed event names in its `EVENTS` list — never typed text, never keys
 - [ ] Model downloads are opt-in and the size is shown before anything large is fetched on a phone
+- [ ] The share card is drawn on the visitor's device and only leaves it through their own share sheet or a download they choose — never uploaded by the site
 
 ## Data
 - [ ] Replays and examples use only made-up sentences (no real names, addresses, IDs or personal data)

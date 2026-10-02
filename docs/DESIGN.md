@@ -20,8 +20,9 @@ file disagree, the code wins and this file gets fixed in the same PR.
 | Shared engine | `engine/` is imported by every chapter, and later by Jarvis | A's parts become C's parts, so a fix is made once |
 | Runtime tiers | Replay → Local → bring-your-own-key | A visitor never sees a broken screen, only a simpler mode |
 | Keys | Claude + OpenAI, in memory only, sent only to the two provider APIs | See [SECURITY_CHECKLIST.md](../SECURITY_CHECKLIST.md) |
-| Analytics | Cookie-free GoatCounter, with page views and named events only | No consent banner on a phone, and typed text is never collected. Sent by `engine/analytics.js` (GoatCounter's own script would break our CSP), only on the live `*.github.io` site. Events: `start-ready-made`, `start-own-words`, `chapter-1…3`, `live-model`, `story-done`, all prefixed `k_ai-playground/`. |
+| Analytics | Cookie-free GoatCounter, with page views and named events only | No consent banner on a phone, and typed text is never collected. Sent by `engine/analytics.js` (GoatCounter's own script would break our CSP), only on the live `*.github.io` site. Events: `start-ready-made`, `start-own-words`, `chapter-1…3`, `live-model`, `story-done`, `share-card-shared`, `share-card-saved`, all prefixed `k_ai-playground/`. |
 | Language | English first | — |
+| Sharing | A "my sentence's journey" image on the finish screen, drawn on the visitor's device (`engine/sharecard.js`), shared with the phone's share sheet or saved; plus a link-preview image (`og-image.png`, source `tools/og-image.html`) | Every share brings the next visitor. Nothing is uploaded, so privacy stays simple |
 | Look and feel | The same warm stone and amber theme, brand header and "In short" card as [khadir-syed.github.io](https://khadir-syed.github.io/) and the other k_ai sites | One recognisable family across the series |
 | Gate to Phase C (Jarvis) | 10K visits a month **and** at least 40% of first-time visitors finishing the story. Stars are a bonus signal. | Measures the non-technical audience and actual learning, not just developer interest |
 
@@ -68,13 +69,13 @@ Plus the ONNX Runtime `.wasm` file: 27 MB with WebGPU, 14 MB without. Browsers c
 
 ## Publishing
 
-`.github/workflows/pages.yml` runs the self-checks, then publishes only the site files (`index.html`, `app.js`, `styles.css`, `engine/`, `chapters/`, `replays/`, `vendor/`) to GitHub Pages on every push to `main`. Actions are pinned to commit SHAs; Dependabot (`.github/dependabot.yml`) proposes updates for them and for `tools/`. `vendor/` is upgraded by hand.
+`.github/workflows/pages.yml` runs the self-checks, then publishes only the site files (`index.html`, `app.js`, `styles.css`, `og-image.png`, `engine/`, `chapters/`, `replays/`, `vendor/`) to GitHub Pages on every push to `main`. Actions are pinned to commit SHAs; Dependabot (`.github/dependabot.yml`) proposes updates for them and for `tools/`. `vendor/` is upgraded by hand.
 
 ## Roadmap
 
 | Phase | Ships | Gate to move on |
 |---|---|---|
-| **A1** ✅ | Runtime tiers, story chapters 1–3, replays, self-checks, GoatCounter, GitHub Pages workflow | Works on iPhone, Android and laptop in every tier |
+| **A1** ✅ | Runtime tiers, story chapters 1–3, replays, self-checks, GoatCounter, GitHub Pages workflow, share card, link preview | Works on iPhone, Android and laptop in every tier |
 | A2 | Chapter 4 "Teach a Model" (webcam), chapter 5 "Pull the Plug" (offline), museum mode, GoatCounter, GitHub Pages workflow, Python twins for the Build door | The gate above |
 | C1 | Text-only Jarvis with a live step view you can pause and steer: memory (engine embeddings), reasoning (bring your own key), skills from k_ai-agent-skills | Bring-your-own-key flow passes the security checklist |
 | C2 | Tools and the finished non-technical demo | — |

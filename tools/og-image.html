@@ -1,0 +1,72 @@
+<!doctype html>
+<!-- Source for og-image.png, the picture shown when the playground link is pasted into
+     LinkedIn, WhatsApp, X, Slack… Regenerate from the repo root:
+       playwright screenshot --viewport-size "1200,630" "file://$PWD/tools/og-image.html" og-image.png
+     Not published to the site; only the PNG is. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>og-image</title>
+<style>
+  :root { --bg: #0b0a09; --card: #1c1917; --line: #292524; --text: #f5f5f4; --muted: #a8a29e; --soft: #d6d3d1; --amber: #fbbf24; --orange: #d97706; }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden; padding: 56px 64px;
+    background: var(--bg) radial-gradient(circle at 30% 0%, rgba(217,119,6,0.28), rgba(11,10,9,0) 60%) no-repeat;
+    color: var(--text); font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: grid; grid-template-columns: 1fr 420px; gap: 48px;
+  }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .frame { width: 72px; height: 72px; padding: 2.5px; border-radius: 20px; background: linear-gradient(#fbbf24, #f59e0b, #78350f); box-shadow: 0 0 24px rgba(245,158,11,0.35); }
+  .frame img { width: 100%; height: 100%; border-radius: 17.5px; display: block; object-fit: cover; }
+  .name { font-size: 30px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
+  .name span, .amber { color: var(--amber); }
+  .tag { font-size: 15px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(253,230,138,0.9); }
+  h1 { margin-top: 44px; font-size: 68px; line-height: 1.02; font-weight: 900; text-transform: uppercase; letter-spacing: -1.5px; }
+  .lead { margin-top: 22px; font-size: 26px; line-height: 1.35; color: var(--soft); }
+  .url { position: absolute; left: 64px; bottom: 48px; font-size: 24px; font-weight: 800; color: var(--amber); }
+  .panel { align-self: center; display: grid; gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--amber); border-radius: 18px; padding: 18px 20px; }
+  .label { font-size: 13px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: 700 20px/1.3 ui-monospace, Menlo, monospace; padding: 4px 9px; border-radius: 7px; color: #fde68a; border: 1px solid rgba(251,191,36,0.45); background: rgba(251,191,36,0.14); }
+  .chip:nth-child(2n) { background: rgba(251,146,60,0.16); border-color: rgba(251,146,60,0.5); color: #fed7aa; }
+  .stars { position: relative; height: 78px; }
+  .stars i { position: absolute; width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 10px currentColor; background: currentColor; }
+  .bar { position: relative; height: 34px; border-radius: 9px; background: var(--bg); overflow: hidden; margin-top: 6px; font: 700 18px/34px ui-monospace, Menlo, monospace; padding: 0 10px; display: flex; justify-content: space-between; }
+  .bar b { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--orange), var(--amber)); opacity: 0.7; }
+  .bar span { position: relative; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="brand">
+      <div class="frame"><img src="https://avatars.githubusercontent.com/u/15974849?v=4&s=160" alt=""></div>
+      <div><p class="name"><span>K</span> the Techman</p><p class="tag">AI Playground</p></div>
+    </div>
+    <h1>Follow one sentence <span class="amber">through AI</span></h1>
+    <p class="lead">Watch your words become tokens, a star in a galaxy of meaning, and a reply guessed one piece at a time. On your phone. No sign-up.</p>
+    <p class="url">khadir-syed.github.io/k_ai-playground</p>
+  </div>
+  <div class="panel">
+    <div class="card">
+      <p class="label">1 · Tokens</p>
+      <div class="chips"><span class="chip">Will</span><span class="chip">␣it</span><span class="chip">␣rain</span><span class="chip">␣tomorrow</span><span class="chip">?</span></div>
+    </div>
+    <div class="card">
+      <p class="label">2 · Meaning</p>
+      <div class="stars">
+        <i style="left:18%;top:40%;color:#7dd3fc"></i><i style="left:28%;top:62%;color:#7dd3fc"></i><i style="left:24%;top:18%;color:#7dd3fc"></i>
+        <i style="left:52%;top:30%;color:#fb923c"></i><i style="left:64%;top:58%;color:#fb7185"></i><i style="left:78%;top:22%;color:#fbbf24"></i>
+        <i style="left:86%;top:66%;color:#86efac"></i><i style="left:44%;top:72%;color:#c4b5fd"></i>
+        <i style="left:22%;top:38%;width:16px;height:16px;color:#fff"></i>
+      </div>
+    </div>
+    <div class="card">
+      <p class="label">3 · Guessing</p>
+      <div class="bar"><b style="width:60%"></b><span>␣know</span><span>60%</span></div>
+      <div class="bar"><b style="width:31%"></b><span>␣think</span><span>31%</span></div>
+    </div>
+  </div>
+</body>
+</html>

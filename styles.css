@@ -226,3 +226,7 @@ details p { color: var(--soft); font-size: 15px; margin: 8px 0 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Share card on the finish screen */
+.share-preview { display: block; width: 100%; max-width: 360px; height: auto; margin: 12px auto; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.share .row { justify-content: center; }

@@ -25,7 +25,7 @@ export default {
       ? Promise.resolve(state.preset.tokens)
       : loadTokenizer().then((tok) => tokenize(tok, state.sentence));
     let list = [];
-    tokensPromise.then((t) => { list = t; render(); }, (err) => {
+    tokensPromise.then((t) => { list = t; state.journey.tokens = t; render(); }, (err) => {
       console.error(err);
       chips.replaceChildren(h('p', {}, 'Couldn’t load the tokenizer. Go back and pick a ready-made sentence.'));
     });

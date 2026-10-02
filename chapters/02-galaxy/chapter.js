@@ -39,6 +39,7 @@ export default {
       you = { text: state.sentence, pos: project(v, basis), you: true };
       const ranked = points.map((p) => ({ p, sim: cosine(v, p.embedding) })).sort((a, b) => b.sim - a.sim).slice(0, 3);
       you.near = ranked.map((r) => r.p);
+      state.journey.neighbour = { text: ranked[0].p.text, sim: ranked[0].sim };
       neighbours.replaceChildren(...ranked.map(({ p, sim }) => h('li', {},
         h('span', { class: 'n-text' }, p.text),
         h('span', { class: 'meter' }, h('span', { style: { width: `${Math.max(0, sim) * 100}%`, background: COLORS[p.group] } })),

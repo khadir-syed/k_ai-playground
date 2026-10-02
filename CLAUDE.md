@@ -27,6 +27,7 @@ sentence through tokens → meaning → prediction. Design and decisions: [docs/
 python3 -m http.server 8000          # serve locally → http://localhost:8000
 node --test "tests/*.test.mjs"       # self-checks (offline, no model download)
 cd tools && npm install && npm run record   # re-record replays from real models
+playwright screenshot --viewport-size "1200,630" "file://$PWD/tools/og-image.html" og-image.png   # link-preview image
 ```
 
 ## Git
