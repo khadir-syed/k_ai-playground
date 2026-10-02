@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.hf.co; worker-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' https://avatars.githubusercontent.com; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.hf.co; worker-src 'self'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="no-referrer">
-  <title>AI Playground</title>
+  <title>AI Playground — k_ai-playground</title>
   <meta name="description" content="Follow one sentence through AI: tokens, meaning and prediction — live in your browser.">
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/jpeg" href="https://avatars.githubusercontent.com/u/15974849?v=4&amp;s=64">
+  <link rel="apple-touch-icon" href="https://avatars.githubusercontent.com/u/15974849?v=4&amp;s=180">
   <link rel="stylesheet" href="styles.css">
   <script type="module" src="app.js"></script>
 </head>
 <body>
   <header class="top">
-    <a class="brand" href="./">k_ai playground</a>
+    <a class="brand-link" href="./">k_ai playground</a>
     <span id="tier" class="tier" aria-live="polite"></span>
   </header>
   <ol id="progress" class="progress" aria-label="Story progress"></ol>

@@ -22,6 +22,7 @@ file disagree, the code wins and this file gets fixed in the same PR.
 | Keys | Claude + OpenAI, in memory only, sent only to the two provider APIs | See [SECURITY_CHECKLIST.md](../SECURITY_CHECKLIST.md) |
 | Analytics | Cookie-free GoatCounter, with page views and named events only | No consent banner on a phone, and typed text is never collected. **Not added yet:** it arrives when the site goes public. |
 | Language | English first | — |
+| Look and feel | The same warm stone and amber theme, brand header and "In short" card as [khadir-syed.github.io](https://khadir-syed.github.io/) and the other k_ai sites | One recognisable family across the series |
 | Gate to Phase C (Jarvis) | 10K visits a month **and** at least 40% of first-time visitors finishing the story. Stars are a bonus signal. | Measures the non-technical audience and actual learning, not just developer interest |
 
 ## Runtime tiers
@@ -46,6 +47,7 @@ Plus the ONNX Runtime `.wasm` file: 27 MB with WebGPU, 14 MB without. Browsers c
 
 - **Scripts:** only this site's files run (`script-src 'self' 'wasm-unsafe-eval'`). transformers.js
   and the ONNX Runtime loader are committed in [`vendor/`](../vendor/) and hash-checked by tests.
+- **Images:** `img-src` allows only this site and `avatars.githubusercontent.com` (the maintainer's profile photo).
 - **Network:** `connect-src` allows exactly `cdn.jsdelivr.net` (the runtime `.wasm`),
   `huggingface.co` and `*.hf.co` (model files; the first redirects to the second). Bring-your-own-key
   pages will add only `api.anthropic.com` and `api.openai.com`.

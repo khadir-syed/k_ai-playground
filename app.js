@@ -31,7 +31,7 @@ function show(index) {
   stage.append(
     h('p', { class: 'eyebrow' }, `Chapter ${index + 1} of ${CHAPTERS.length}`),
     h('h2', { tabindex: '-1' }, chapter.title),
-    body,
+    h('section', { class: 'card' }, body),
     h('nav', { class: 'story-nav' },
       h('button', { class: 'ghost', onclick: () => show(index - 1) }, '← Back'),
       h('button', { class: 'primary', onclick: () => show(index + 1) }, index + 1 < CHAPTERS.length ? 'Next chapter →' : 'Finish →')),
@@ -61,17 +61,44 @@ function intro() {
   };
 
   stage.append(
-    h('h1', {}, 'Follow one sentence', h('br'), 'through AI'),
-    h('p', { class: 'lead' }, 'Pick a sentence. Watch what an AI does with it — piece by piece, star by star, guess by guess.'),
-    h('div', { class: 'presets', role: 'list' },
-      state.story.presets.map((p) => h('button', { class: 'chip', role: 'listitem', onclick: () => usePreset(p) }, p.text))),
-    h('form', { class: 'own', onsubmit: ownSentence },
-      h('label', {}, 'Or use your own words'),
-      h('div', { class: 'row' }, input, h('button', { class: 'primary', type: 'submit' }, 'Go'))),
-    notice,
-    h('p', { class: 'fineprint' }, 'Ready-made sentences use recorded runs of real AI models — instant, no download.'),
+    brandHero(),
+    h('section', { class: 'card easy' },
+      h('p', { class: 'easy-label' }, 'In short'),
+      h('p', {}, 'AI is a computer helper you can talk to.'),
+      h('p', {}, 'Here you can watch what it does with your words.'),
+      h('p', {}, 'Think of a glass-walled factory.'),
+      h('p', {}, 'Your sentence goes in. You watch every machine work on it.')),
+    h('section', { class: 'card' },
+      h('h1', {}, 'Follow one sentence through AI'),
+      h('p', {}, 'Pick a sentence. Watch what an AI does with it — piece by piece, star by star, guess by guess.'),
+      h('div', { class: 'presets', role: 'list' },
+        state.story.presets.map((p) => h('button', { class: 'chip', role: 'listitem', onclick: () => usePreset(p) }, p.text))),
+      h('form', { class: 'own', onsubmit: ownSentence },
+        h('label', {}, 'Or use your own words'),
+        h('div', { class: 'row' }, input, h('button', { class: 'primary', type: 'submit' }, 'Go'))),
+      notice,
+      h('p', { class: 'muted' }, 'Ready-made sentences use recorded runs of real AI models — instant, no download.')),
+    siblingLinks(),
+    footer(),
   );
 }
+
+function brandHero() {
+  return h('header', { class: 'hero brand' },
+    h('div', { class: 'brand-frame' }, h('img', { src: 'https://avatars.githubusercontent.com/u/15974849?v=4&s=224', alt: 'Khadir', width: '112', height: '112' })),
+    h('a', { class: 'badge', href: 'https://khadir-syed.github.io/', rel: 'noopener noreferrer' }, '@k_thetechman'),
+    h('p', { class: 'brand-name' }, h('span', {}, 'K'), ' the Techman'),
+    h('p', { class: 'subtitle' }, 'AI Playground · see AI from the inside'));
+}
+
+function siblingLinks() {
+  return h('section', { class: 'card links' },
+    h('p', { class: 'muted' }, 'Want to go further? Everything in the k_ai series is free.'),
+    h('a', { class: 'link-card', href: 'https://khadir-syed.github.io/k_ai-basics/web/', rel: 'noopener noreferrer' }, 'AI Basics — 10 small demos of how AI works'),
+    h('a', { class: 'link-card', href: 'https://khadir-syed.github.io/k_ai-agent-skills/web/', rel: 'noopener noreferrer' }, 'AI skills, explained — putting AI to work'));
+}
+
+const footer = () => h('footer', { class: 'footer' }, 'Learning should not stop.');
 
 function usePreset(preset) {
   Object.assign(state, { preset, sentence: preset.text });
@@ -95,15 +122,18 @@ async function startLocal(text, notice) {
 
 function finale() {
   stage.append(
-    h('h2', { tabindex: '-1' }, 'What just happened to your sentence'),
-    h('ol', { class: 'recap' },
-      h('li', {}, h('strong', {}, 'It was chopped into tokens. '), 'AI never sees words — only numbered pieces.'),
-      h('li', {}, h('strong', {}, 'It became a place in a galaxy. '), 'Meaning is a position: similar ideas sit close together.'),
-      h('li', {}, h('strong', {}, 'A reply was guessed, one token at a time. '), 'The AI doesn’t know answers — it predicts likely next pieces.')),
-    h('p', { class: 'lead' }, 'Coming next in the playground: teach a model with your camera, run AI with the internet switched off — and meet Jarvis, an assistant built from these exact pieces.'),
+    h('section', { class: 'card' },
+      h('h2', { tabindex: '-1' }, 'What just happened to your sentence'),
+      h('ol', { class: 'recap' },
+        h('li', {}, h('strong', {}, 'It was chopped into tokens. '), 'AI never sees words — only numbered pieces.'),
+        h('li', {}, h('strong', {}, 'It became a place in a galaxy. '), 'Meaning is a position: similar ideas sit close together.'),
+        h('li', {}, h('strong', {}, 'A reply was guessed, one token at a time. '), 'The AI doesn’t know answers — it predicts likely next pieces.')),
+      h('p', { class: 'muted' }, 'Coming next in the playground: teach a model with your camera, run AI with the internet switched off — and meet Jarvis, an assistant built from these exact pieces.')),
     h('nav', { class: 'story-nav' },
       h('button', { class: 'ghost', onclick: () => show(CHAPTERS.length - 1) }, '← Back'),
       h('button', { class: 'primary', onclick: () => show(-1) }, 'Try another sentence')),
+    siblingLinks(),
+    footer(),
   );
   stage.querySelector('h2').focus();
 }

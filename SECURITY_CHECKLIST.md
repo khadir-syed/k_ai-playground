@@ -36,6 +36,7 @@ Adding an origin here needs a reason in the PR. Today the full list is:
 | Origin | Directive | Why |
 |---|---|---|
 | `'self'` | all | the site itself |
+| `https://avatars.githubusercontent.com` | `img-src` | the maintainer's GitHub profile photo in the brand header and favicon, same as the other k_ai sites (image only, no script) |
 | `https://cdn.jsdelivr.net` | `connect-src` | ONNX Runtime `.wasm` binary, exact pinned version (data, not script) |
 | `https://huggingface.co`, `https://*.hf.co` | `connect-src` | model files, exact pinned commit; `huggingface.co` redirects to `*.hf.co` |
 | `https://api.anthropic.com`, `https://api.openai.com` | `connect-src` | bring-your-own-key only, on pages that offer it |
