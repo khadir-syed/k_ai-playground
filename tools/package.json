@@ -1,0 +1,12 @@
+{
+  "name": "k_ai-playground-tools",
+  "private": true,
+  "type": "module",
+  "description": "Offline scripts for k_ai-playground. Never shipped to the site.",
+  "scripts": {
+    "record": "node record-replays.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.0"
+  }
+}

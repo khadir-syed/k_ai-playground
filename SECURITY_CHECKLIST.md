@@ -7,7 +7,7 @@ this file is a template; tick them in your head (or your PR), not here.
 - [ ] **Architecture all good?** — chapter logic lives in `engine/`, chapters only wire UI; Replay tier works with no key and no download; no network calls except the origins listed in [Allowed origins](#allowed-origins).
 - [ ] **Security all good?** — every section below passes, especially [Visitor API keys](#visitor-api-keys-bring-your-own-key) and [Content-Security-Policy](#content-security-policy).
 - [ ] **Code standard wise all good?** — matches this repo's style (plain ES modules, no build step, no frameworks, hand-rolled logic where it teaches the idea), and runs without console errors.
-- [ ] **Technically all good?** — `node --test tests/` passes; Replay tier gives the same output for the same input; Local tier falls back cleanly to Replay when the device can't run it; key mode fails with a clear, non-crashing message for a missing or wrong key.
+- [ ] **Technically all good?** — `node --test "tests/*.test.mjs"` passes (this also checks the CSP, no `innerHTML`/`eval`, no browser storage, and vendor hashes); Replay tier gives the same output for the same input; Local tier falls back cleanly to Replay when the device can't run it; key mode fails with a clear, non-crashing message for a missing or wrong key.
 - [ ] **No other tech issues?** — tested end-to-end in a real browser at phone width (360–390px) and laptop width, not just by reading the code.
 - [ ] **Documentation is up to date, along with required diagrams** — the relevant README(s) and [docs/DESIGN.md](docs/DESIGN.md) describe what the code does right now (not a planned future state), and any Mermaid diagram still matches the real flow.
 - [ ] **The rest of this checklist passes** — every section below.
@@ -25,7 +25,7 @@ this file is a template; tick them in your head (or your PR), not here.
 - [ ] Provider responses are treated as untrusted text (shown with `textContent` only)
 
 ## Content-Security-Policy
-- [ ] Every HTML page has the strict CSP `<meta>` tag; no page loosens it beyond [Allowed origins](#allowed-origins)
+- [ ] Every HTML page has the strict CSP `<meta>` tag (exact policy is asserted in `tests/security.test.mjs`); no page loosens it beyond [Allowed origins](#allowed-origins)
 - [ ] `script-src` is `'self' 'wasm-unsafe-eval'` only — no CDN scripts, no `'unsafe-inline'`, no `'unsafe-eval'`
 - [ ] No inline `<script>` blocks and no inline `on…=` event handlers
 - [ ] Browser console shows no CSP violations in any tier

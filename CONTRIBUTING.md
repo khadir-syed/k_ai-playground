@@ -32,6 +32,7 @@ same pieces the Jarvis capstone is built from later. Fix a bug once, in
 k_ai-playground/
 ├── index.html          the story: "Follow one sentence through AI"
 ├── engine/             shared ES modules — runtime tiers, models, math
+├── app.js              the story controller: picks the sentence, runs the chapters in order
 ├── chapters/           one folder per story chapter (01-tokens, 02-galaxy, …)
 ├── replays/            recorded real model runs (Replay tier + test data)
 ├── vendor/             pinned third-party JS, committed and hash-checked
@@ -55,10 +56,12 @@ Every chapter must work in all tiers it claims, and must fall back silently
 
 ```text
 chapters/0N-chapter-name/
-├── index.html          (strict CSP meta tag — copy from an existing chapter)
-├── chapter.js          (UI only; logic belongs in engine/)
+├── chapter.js          (exports { short, title, mount(root, ctx) } — UI only; logic belongs in engine/)
 └── README.md
 ```
+
+Then add it to the `CHAPTERS` list in [`app.js`](app.js). Chapters are mounted into the single
+story page, `index.html`, which carries the CSP.
 
 A new chapter should:
 
@@ -114,7 +117,7 @@ These are summarised here and enforced by
 
 ## Testing your change
 
-1. Run the self-checks: `node --test tests/` — all must pass.
+1. Run the self-checks: `node --test "tests/*.test.mjs"` — all must pass.
 2. Serve the repo locally (`python3 -m http.server 8000`) and actually use
    the chapter in a browser at **phone width (360–390px) and laptop width**,
    in Replay tier and in every other tier it claims.
@@ -132,7 +135,7 @@ This mirrors [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md):
 - [ ] Visitor keys stay in memory only and reach only the two provider APIs.
 - [ ] CSP unchanged, or every new origin justified in the PR.
 - [ ] Vendored files, ONNX runtime and model revisions still pinned.
-- [ ] `node --test tests/` passes.
+- [ ] `node --test "tests/*.test.mjs"` passes.
 - [ ] Tested at phone and laptop width; console free of errors and CSP
       violations.
 - [ ] The chapter's README (and any diagram) matches exactly what the code
