@@ -1,5 +1,7 @@
 # k_ai-playground
 
+**▶ Try it: <https://khadir-syed.github.io/k_ai-playground/>**
+
 **See AI from the inside.** Type a sentence, then follow it through an AI: watch it get chopped
 into tokens, land as a star in a galaxy of meaning, and get answered one guess at a time — all in
 your browser, on your phone, with no account and no API key.

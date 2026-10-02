@@ -66,11 +66,15 @@ Plus the ONNX Runtime `.wasm` file: 27 MB with WebGPU, 14 MB without. Browsers c
 - No KV-cache: each step re-reads the whole text, which is O(n²) but simple. Replies are capped
   at 40 tokens.
 
+## Publishing
+
+`.github/workflows/pages.yml` runs the self-checks, then publishes only the site files (`index.html`, `app.js`, `styles.css`, `engine/`, `chapters/`, `replays/`, `vendor/`) to GitHub Pages on every push to `main`. Actions are pinned to commit SHAs; Dependabot (`.github/dependabot.yml`) proposes updates for them and for `tools/`. `vendor/` is upgraded by hand.
+
 ## Roadmap
 
 | Phase | Ships | Gate to move on |
 |---|---|---|
-| **A1** ✅ | Runtime tiers, story chapters 1–3, replays, self-checks | Works on iPhone, Android and laptop in every tier |
+| **A1** ✅ | Runtime tiers, story chapters 1–3, replays, self-checks, GoatCounter, GitHub Pages workflow | Works on iPhone, Android and laptop in every tier |
 | A2 | Chapter 4 "Teach a Model" (webcam), chapter 5 "Pull the Plug" (offline), museum mode, GoatCounter, GitHub Pages workflow, Python twins for the Build door | The gate above |
 | C1 | Text-only Jarvis with a live step view you can pause and steer: memory (engine embeddings), reasoning (bring your own key), skills from k_ai-agent-skills | Bring-your-own-key flow passes the security checklist |
 | C2 | Tools and the finished non-technical demo | — |

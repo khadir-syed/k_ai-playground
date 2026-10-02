@@ -31,5 +31,5 @@ cd tools && npm install && npm run record   # re-record replays from real models
 
 ## Git
 
-Work on `main`. Commit freely, but **never push** until the maintainer has reviewed and approved
+Work on `main`. Every push to `main` publishes the live site (`.github/workflows/pages.yml`). Commit freely, but **never push** until the maintainer has reviewed and approved
 the change, and the security checklist has been run.
