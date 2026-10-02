@@ -74,6 +74,12 @@ body {
   letter-spacing: 0.6px; text-transform: uppercase;
 }
 
+/* Playground: a compact version, so the sentence picker shows on a phone's first screen */
+.hero.compact { display: flex; align-items: center; justify-content: center; gap: 14px; text-align: left; margin: 4px 0 12px; }
+.hero.compact .brand-frame { width: 56px; height: 56px; margin: 0; padding: 2px; border-radius: 16px; flex: none; }
+.hero.compact img { border-radius: 14px; }
+.hero.compact .brand-name { margin: 0 0 4px; font-size: 22px; }
+
 /* Headings */
 h1 {
   margin: 0 0 8px; font-size: 22px; line-height: 1.25; font-weight: 900; letter-spacing: -0.6px;

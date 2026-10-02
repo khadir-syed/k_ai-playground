@@ -84,11 +84,11 @@ function intro() {
 }
 
 function brandHero() {
-  return h('header', { class: 'hero brand' },
-    h('div', { class: 'brand-frame' }, h('img', { src: 'https://avatars.githubusercontent.com/u/15974849?v=4&s=224', alt: 'Khadir', width: '112', height: '112' })),
-    h('a', { class: 'badge', href: 'https://khadir-syed.github.io/', rel: 'noopener noreferrer' }, '@k_thetechman'),
-    h('p', { class: 'brand-name' }, h('span', {}, 'K'), ' the Techman'),
-    h('p', { class: 'subtitle' }, 'AI Playground · see AI from the inside'));
+  return h('header', { class: 'hero brand compact' },
+    h('div', { class: 'brand-frame' }, h('img', { src: 'https://avatars.githubusercontent.com/u/15974849?v=4&s=128', alt: 'Khadir', width: '56', height: '56' })),
+    h('div', {},
+      h('p', { class: 'brand-name' }, h('span', {}, 'K'), ' the Techman'),
+      h('a', { class: 'badge', href: 'https://khadir-syed.github.io/', rel: 'noopener noreferrer' }, '@k_thetechman')));
 }
 
 function siblingLinks() {

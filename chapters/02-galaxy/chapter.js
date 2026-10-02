@@ -4,7 +4,9 @@ import { cosine, pca, project } from '../../engine/math.js';
 import { embed } from '../../engine/ai.js';
 import { loadEmbedder } from '../../engine/runtime.js';
 
-const COLORS = { weather: '#5ec8ff', animals: '#ffb454', food: '#ff7a9a', tech: '#9d8cff', feelings: '#5ee6a0', sports: '#ffe066' };
+// Six families need six colours you can tell apart on a dark sky. Warm ones come from the
+// k_ai site palette (amber, orange, good-green); the rest are its softer cousins.
+const COLORS = { weather: '#7dd3fc', animals: '#fb923c', food: '#fb7185', tech: '#c4b5fd', feelings: '#86efac', sports: '#fbbf24' };
 
 export default {
   short: 'Meaning',
