@@ -48,7 +48,7 @@ Adding an origin here needs a reason in the PR. Today the full list is:
 - [ ] No third-party code runs except the files in `vendor/`
 
 ## Dependencies
-- [ ] Every file in `vendor/` matches the exact version and SHA-256 recorded in [vendor/README.md](vendor/README.md), re-checked from the npm tarball when it changes
+- [ ] Every file in `vendor/` matches the exact version and SHA-256 recorded in [vendor/README.md](vendor/README.md), re-checked from the npm tarball when it changes; `transformers.min.js` differs from npm only by the rename in `tools/patch-vendor.mjs` (a test proves it)
 - [ ] The ONNX Runtime `.wasm` URL pins the exact version the vendored transformers.js was built for
 - [ ] Every model is loaded at a pinned Hugging Face commit (`revision`), never `main`
 - [ ] `tools/` dependencies are pinned in `package-lock.json`, and `npm audit` there has no unresolved high/critical findings

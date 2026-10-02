@@ -52,6 +52,14 @@ test('vendored files match the hashes in vendor/README.md', async () => {
   }
 });
 
+test('vendored transformers.js is the npm file plus only the documented rename', async () => {
+  const { unpatch, RENAMES } = await import('../tools/patch-vendor.mjs');
+  const original = (await read('vendor/README.md')).match(/Unpatched npm file[\s\S]*?`([0-9a-f]{64})`/)[1];
+  const vendored = await read('vendor/transformers.min.js');
+  for (const [from] of RENAMES) assert.ok(!vendored.includes(from), `"${from}" would trip GitHub push protection`);
+  assert.equal(createHash('sha256').update(unpatch(vendored)).digest('hex'), original);
+});
+
 test('vendored transformers.js was built for the pinned ONNX Runtime', async () => {
   const { ORT_VERSION } = await import('../engine/runtime.js');
   assert.ok((await read('vendor/transformers.min.js')).includes(`"${ORT_VERSION}"`));
