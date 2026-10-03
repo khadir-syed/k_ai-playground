@@ -135,6 +135,9 @@ The site uses a **smaller copy** of the model, with every number squeezed into a
 can download it. That squeezing changes some guesses a little, and here it was enough to make the AI loop.
 `same_numbers.py` runs that smaller copy, and gets the site's answers exactly.
 
+Notice something else: the reply starts "I'm sorry for the confusion", but nobody was confused! The AI
+copies how chat replies usually begin. It's guessing what a reply *looks like*, not thinking about you.
+
 ---
 
 # For developers

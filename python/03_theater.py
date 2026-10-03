@@ -34,10 +34,14 @@ for step in range(MAX_REPLY_TOKENS):
         print("\nStep by step (picked token, then the runners-up):\n")
     pick = random.choices(range(TOP_K), probs)[0] if wild else 0
     chosen = options[pick]
-    others = [f"{kai.show_token(o['text'])} {p:.0%}" for o, p in zip(options, probs) if o is not chosen]
-    print(f"  {step + 1:>2}. {kai.show_token(chosen['text']):<12} (also: {', '.join(others[:3])})")
+    # Runners-up under 1% are often half-letters (one byte of a curly quote), so leave them out.
+    others = [f"{kai.show_token(o['text'])} {p:.0%}" for o, p in zip(options, probs) if o is not chosen and p >= 0.01]
+    also = f" (also: {', '.join(others[:3])})" if others else ""
+    print(f"  {step + 1:>2}. {kai.show_token(chosen['text']):<12}{also}".rstrip())
     if chosen["id"] == tokenizer.eos_token_id:
         break
     ids.append(chosen["id"])
+else:
+    print(f"\n(Stopped at {MAX_REPLY_TOKENS} tokens, the same limit as the site.)")
 
 print("\nThe reply:", tokenizer.decode(ids[prompt_len:]).strip())
