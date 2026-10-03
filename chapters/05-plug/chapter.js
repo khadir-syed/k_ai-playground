@@ -10,6 +10,8 @@ const MAX_TEXT = 120;
 
 export default {
   short: 'Offline',
+  icon: '🔌',
+  blurb: 'Airplane mode on. The AI keeps working.',
   title: 'Pull the plug',
   mount(root, { state }) {
     countEvent('bonus-plug');

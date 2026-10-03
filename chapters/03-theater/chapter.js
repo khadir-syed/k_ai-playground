@@ -10,6 +10,8 @@ const MAX_TOKENS = 40;
 
 export default {
   short: 'Guessing',
+  icon: '🎲',
+  blurb: 'A reply guessed one piece at a time.',
   title: 'AI is a guessing machine',
   mount(root, { state, restartWith }) {
     const replay = state.preset?.theater;

@@ -237,6 +237,26 @@ details p { color: var(--soft); font-size: 15px; margin: 8px 0 0; }
 .steps li { margin: 8px 0; }
 .win { font-size: 18px; font-weight: 800; color: #fff; }
 
+/* Museum */
+.exhibits { display: grid; gap: 10px; margin: 16px 0; }
+.exhibit { display: flex; align-items: center; gap: 14px; text-align: left; border-radius: 16px; padding: 14px 16px; background: var(--card); }
+.exhibit:hover { border-color: var(--amber); }
+.exhibit strong { display: block; }
+.exhibit .muted { display: block; font-weight: 400; font-size: 14px; }
+.exhibit-icon { font-size: 28px; }
+.teaser-row { list-style: none; padding: 0; margin: 8px 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.teaser-row li {
+  display: grid; justify-items: center; gap: 4px; padding: 10px 2px; border-radius: 12px; font-size: 12px; color: var(--muted);
+  border: 1px solid var(--line); background: var(--bg); animation: glow 3s ease-in-out infinite;
+}
+.teaser-row li span { font-size: 22px; filter: grayscale(0.6); }
+.teaser-row li:nth-child(2) { animation-delay: 0.6s; }
+.teaser-row li:nth-child(3) { animation-delay: 1.2s; }
+.teaser-row li:nth-child(4) { animation-delay: 1.8s; }
+.teaser-row li:nth-child(5) { animation-delay: 2.4s; }
+@keyframes glow { 50% { border-color: rgba(251, 191, 36, 0.6); box-shadow: 0 0 12px rgba(251, 191, 36, 0.25); } }
+@media (min-width: 640px) { .exhibits { grid-template-columns: 1fr 1fr; } }
+
 /* Finale */
 .recap { padding-left: 22px; margin: 0 0 12px; }
 .recap li { margin: 10px 0; color: var(--soft); }

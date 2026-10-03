@@ -5,6 +5,8 @@ import { loadTokenizer } from '../../engine/runtime.js';
 
 export default {
   short: 'Tokens',
+  icon: '🧩',
+  blurb: 'Your sentence, chopped into numbered pieces.',
   title: 'AI doesn’t read words',
   mount(root, { state }) {
     let asNumbers = false;

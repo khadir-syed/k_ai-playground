@@ -56,7 +56,7 @@ Every chapter must work in all tiers it claims, and must fall back silently
 
 ```text
 chapters/0N-chapter-name/
-├── chapter.js          (exports { short, title, mount(root, ctx) } — UI only; logic belongs in engine/)
+├── chapter.js          (exports { short, title, icon, blurb, mount(root, ctx) } — UI only; logic belongs in engine/)
 └── README.md
 ```
 

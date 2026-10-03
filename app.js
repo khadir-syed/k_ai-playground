@@ -19,13 +19,13 @@ const dots = document.getElementById('progress');
 const tierBadge = document.getElementById('tier');
 let cleanup = null;
 
-// Clears the stage for a new screen. `step` is the position in Start, chapters…, Done.
+// Clears the stage for a new screen. `step` is the position in Start, chapters…, Done; null hides the dots.
 function reset(step) {
   cleanup?.();
   cleanup = null;
   stage.replaceChildren();
-  dots.replaceChildren(...['Start', ...CHAPTERS.map((c) => c.short), 'Done'].map((label, i) =>
-    h('li', { class: i === step ? 'on' : i < step ? 'done' : '', 'aria-current': i === step ? 'step' : false }, label)));
+  dots.replaceChildren(...(step == null ? [] : ['Start', ...CHAPTERS.map((c) => c.short), 'Done'].map((label, i) =>
+    h('li', { class: i === step ? 'on' : i < step ? 'done' : '', 'aria-current': i === step ? 'step' : false }, label))));
   tierBadge.textContent = state.preset ? '▶ Replay' : state.sentence ? '⚡ Live on your device' : '';
   window.scrollTo(0, 0);
 }
@@ -43,6 +43,39 @@ function showBonus(index) {
   reset(CHAPTERS.length + 1);
   page(BONUS[index], `Bonus ${index + 1} of ${BONUS.length}`, () => show(CHAPTERS.length),
     index + 1 < BONUS.length ? ['Next bonus →', () => showBonus(index + 1)] : ['Finish →', () => show(CHAPTERS.length)]);
+}
+
+// The museum: every exhibit, in any order. Reached from the finish screen or the #museum link
+// (bookmarkable, since the site remembers nothing between visits).
+const EXHIBITS = [...CHAPTERS, ...BONUS];
+
+function museum() {
+  reset(null);
+  countEvent('museum-open');
+  if (location.hash !== '#museum') history.pushState(null, '', '#museum');
+  stage.append(
+    h('p', { class: 'eyebrow' }, 'Museum'),
+    h('h2', { tabindex: '-1' }, 'Every exhibit, any order'),
+    h('p', { class: 'muted' }, state.sentence ? `Exhibits use your sentence: “${state.sentence}”` : 'Exhibits use a ready-made sentence. Start the story to pick your own.'),
+    h('div', { class: 'exhibits' }, EXHIBITS.map((c, i) => h('button', { class: 'exhibit', onclick: () => exhibit(i) },
+      h('span', { class: 'exhibit-icon', 'aria-hidden': 'true' }, c.icon),
+      h('span', {}, h('strong', {}, c.title), h('span', { class: 'muted' }, c.blurb))))),
+    h('nav', { class: 'story-nav' }, h('button', { class: 'ghost', onclick: () => leaveMuseum() }, '← Start')),
+    footer(),
+  );
+  stage.querySelector('h2').focus();
+}
+
+function exhibit(index) {
+  if (!state.sentence) { const p = state.story.presets[0]; Object.assign(state, { preset: p, sentence: p.text, journey: {} }); }
+  reset(null);
+  page(EXHIBITS[index], `Exhibit ${index + 1} of ${EXHIBITS.length}`, museum,
+    index + 1 < EXHIBITS.length ? ['Next exhibit →', () => exhibit(index + 1)] : ['Museum →', museum]);
+}
+
+function leaveMuseum() {
+  history.pushState(null, '', location.pathname + location.search);
+  show(-1);
 }
 
 function page(chapter, eyebrow, back, [nextLabel, next]) {
@@ -97,9 +130,18 @@ function intro() {
         h('div', { class: 'row' }, input, h('button', { class: 'primary', type: 'submit' }, 'Go'))),
       notice,
       h('p', { class: 'muted' }, 'Ready-made sentences use recorded runs of real AI models — instant, no download.')),
+    teaser(),
     siblingLinks(),
     footer(),
   );
+}
+
+// A locked glimpse of the museum. Nothing moves on by itself; it opens from the finish screen.
+function teaser() {
+  return h('section', { class: 'card teaser', 'aria-label': 'The museum, locked until you finish the story' },
+    h('p', { class: 'eyebrow' }, '🔒 The museum'),
+    h('ul', { class: 'teaser-row' }, EXHIBITS.map((c) => h('li', {}, h('span', { 'aria-hidden': 'true' }, c.icon), c.short))),
+    h('p', { class: 'muted' }, 'Five exhibits, including two bonus rounds. Opens when you finish the story.'));
 }
 
 // "My sentence's journey": drawn on this device; shared or saved only if the visitor chooses.
@@ -191,9 +233,11 @@ function finale() {
         h('li', {}, h('strong', {}, 'A reply was guessed, one token at a time. '), 'The AI doesn’t know answers — it predicts likely next pieces.')),
       h('p', { class: 'muted' }, 'Coming later: Jarvis, an assistant built from these exact pieces.')),
     h('section', { class: 'card' },
-      h('h2', {}, 'Bonus rounds'),
-      h('p', { class: 'muted' }, 'You finished the story. Want more?'),
-      h('div', { class: 'presets' }, BONUS.map((b, i) => h('button', { class: 'chip', onclick: () => showBonus(i) }, `Bonus ${i + 1}: ${b.title}`)))),
+      h('h2', {}, 'Keep exploring'),
+      h('p', { class: 'muted' }, 'You finished the story. Two bonus rounds, and the museum is open.'),
+      h('div', { class: 'presets' },
+        BONUS.map((b, i) => h('button', { class: 'chip', onclick: () => showBonus(i) }, `${b.icon} Bonus ${i + 1}: ${b.title}`)),
+        h('button', { class: 'chip', onclick: museum }, '🏛 Open the museum: every exhibit'))),
     shareCard(),
     h('nav', { class: 'story-nav' },
       h('button', { class: 'ghost', onclick: () => show(CHAPTERS.length - 1) }, '← Back'),
@@ -208,7 +252,9 @@ try {
   const [story, caps] = await Promise.all([loadReplay(), detect()]);
   Object.assign(state, { story, plan: downloadPlan(caps) });
   countPage();
-  show(-1);
+  addEventListener('popstate', () => (location.hash === '#museum' ? museum() : show(-1)));
+  if (location.hash === '#museum') museum();
+  else show(-1);
 } catch (err) {
   console.error(err);
   stage.replaceChildren(h('p', {}, 'Something went wrong loading the playground. Please refresh the page.'));

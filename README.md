@@ -29,6 +29,10 @@ Part of the k_ai series:
 | B1 | [You can teach an AI](chapters/04-teach/) | Sort examples into two groups, then watch it guess new ones. Name your own groups on your device | Replay · Local |
 | B2 | [Pull the plug](chapters/05-plug/) | Turn on airplane mode, and the AI on your device keeps answering | Local |
 
+**Museum:** finishing the story opens the museum, where every exhibit can be visited in any order.
+The intro shows it locked. Returning visitors can go straight to it with the `#museum` link,
+because the site remembers nothing between visits.
+
 At the end of the story, you get a picture of **your sentence's journey** to share or save. It's made on your
 device and nothing is uploaded.
 
