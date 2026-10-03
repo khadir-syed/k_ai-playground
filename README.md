@@ -1,9 +1,12 @@
 # k_ai-playground
 
-**▶ Try it: <https://khadir-syed.github.io/k_ai-playground/>**
+> 🌐 **Not a coder? Follow one sentence through an AI, on your phone — nothing to install:**
+> https://khadir-syed.github.io/k_ai-playground/
 
-**See AI from the inside.** Type a sentence and follow it through an AI, step by step. It works on
-your phone, it's free, and you don't need to sign up.
+> Type a sentence and watch an AI chop it up, find its meaning and guess a reply — step by step, right in your web browser. No sign-ups, no server of ours, no credit card.
+
+[![Links: K THE TECHMAN](https://img.shields.io/badge/K_THE_TECHMAN-All_links-D97706?style=flat-square&labelColor=181512)](https://khadir-syed.github.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-D97706?style=flat-square&labelColor=181512)](LICENSE)
 
 Most people only see what comes *out* of an AI. Here you get a tour inside, like a factory with
 glass walls, and you watch every machine work on *your* words.
