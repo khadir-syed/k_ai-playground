@@ -109,20 +109,26 @@ bars, and gets things wrong sometimes, which is part of the lesson.
 Shows that the AI runs on your device: turn on airplane mode, and it keeps working.
 
 - Uses whatever is already in memory: at least the embedder (Teach a Model runs offline), plus the
-  chapter 3 model if it was loaded. Replay visitors are offered the download first (MB shown).
+  chapter 3 model if it was loaded. Replay visitors get a note explaining why, and are offered only
+  the 23 MB meaning model (plus the runtime), light enough for mobile data. Never the 130 MB one.
 - Detects the change with `navigator.onLine` and the `offline` / `online` events. No service worker.
 - **Must not reload while offline:** the page itself isn't cached, only the model files are. The
   chapter says so.
 - Events sent while offline are lost (GoatCounter beacon fails quietly). Acceptable.
-- **To learn in the spike:** do the events fire on iOS Safari and Android Chrome in airplane mode,
-  does inference keep working, and does the Cache API serve model files offline after a reload
-  attempt.
+- **To learn in the spike** (Android + Chrome, served from the laptop over Wi-Fi): do the events
+  fire in airplane mode, does inference keep working, and what a reload does. Over a LAN address
+  the page isn't a secure context, so WebGPU is off and this tests the WebAssembly path only.
 
 ### Museum mode
 
 `#museum` lists all five chapters as exhibits. Each opens directly with a default sentence when no
-story is running, so every chapter must mount with an empty `state.journey`. Linked from the intro
-and the finish screen. The finish screen also offers the two bonus chapters.
+story is running, so every chapter must mount with an empty `state.journey`.
+
+- **Intro:** a teaser strip of the five exhibits, locked, with "Opens when you finish the story".
+  Nothing moves on by itself (no timers, WCAG 2.2.1), and the glow respects reduced motion.
+- **Finish screen:** opens the museum and offers the two bonus chapters.
+- **Returning visitors:** the `#museum` link works directly (bookmark or share it). The site still
+  stores nothing, so "finished" is not remembered between visits. That is deliberate.
 
 ### Analytics additions
 
