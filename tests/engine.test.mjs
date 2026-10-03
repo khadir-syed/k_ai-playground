@@ -1,7 +1,7 @@
 // Offline checks for the shared engine math and runtime rules. Run: node --test tests/
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { softmax, topK, sample, cosine, pca, project, halfToFloat } from '../engine/math.js';
+import { softmax, topK, sample, cosine, mean, nearestGroup, pca, project, halfToFloat } from '../engine/math.js';
 import { downloadPlan } from '../engine/runtime.js';
 
 const close = (a, b, eps = 1e-6) => assert.ok(Math.abs(a - b) < eps, `${a} ≈ ${b}`);
@@ -33,6 +33,19 @@ test('cosine similarity', () => {
   close(cosine([1, 0], [-1, 0]), -1);
 });
 
+test('mean is the middle of a group', () => {
+  assert.deepEqual(mean([[0, 2], [2, 4]]), [1, 3]);
+});
+
+test('nearestGroup ranks groups by closeness and flags close calls', () => {
+  const g = nearestGroup([1, 0.1], { food: [1, 0], tech: [0, 1] });
+  assert.deepEqual(g.ranked.map((r) => r.name), ['food', 'tech']);
+  assert.equal(g.closeCall, false);
+  assert.equal(nearestGroup([1, 1.01], { food: [1, 0], tech: [0, 1] }).closeCall, true);
+  assert.equal(g.far, false);
+  assert.equal(nearestGroup([0.05, -1], { food: [1, 0], tech: [0, 1] }).far, true);
+});
+
 test('pca finds the direction of most spread, deterministically', () => {
   const pts = [[-3, 0.1, 0], [-1, -0.1, 0], [1, 0.1, 0], [3, -0.1, 0]];
   const basis = pca(pts, 2);
@@ -56,4 +69,5 @@ test('download plan: replay only without WebAssembly, bigger runtime with WebGPU
   assert.deepEqual(gpu.lm, { device: 'webgpu', dtype: 'q4f16' });
   assert.deepEqual(cpu.lm, { device: 'wasm', dtype: 'q8' });
   assert.ok(gpu.fast && !cpu.fast);
+  assert.ok(cpu.embedMB < cpu.starterMB && gpu.embedMB < gpu.starterMB);
 });

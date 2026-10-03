@@ -42,6 +42,24 @@ export function cosine(a, b) {
   return dot / (Math.sqrt(na * nb) || 1);
 }
 
+// The average of several vectors: the "middle" of a group of examples.
+export function mean(vectors) {
+  return vectors[0].map((_, i) => vectors.reduce((sum, v) => sum + v[i], 0) / vectors.length);
+}
+
+// Teach a Model: which group's middle is this vector closest to? Ranked best first.
+// Raw similarities are small (about 0.05-0.4, see docs/DESIGN.md), so we only ever say which is
+// closer, whether it was a close call, and whether it's far from both ("a wild guess").
+// ponytail: fixed thresholds from the A2 spike; tune them if real visitors get misleading verdicts.
+export const CLOSE_CALL = 0.05;
+export const FAR = 0.1;
+export function nearestGroup(vector, centroids) {
+  const ranked = Object.entries(centroids)
+    .map(([name, c]) => ({ name, sim: cosine(vector, c) }))
+    .sort((a, b) => b.sim - a.sim);
+  return { ranked, closeCall: ranked[0].sim - ranked[1].sim < CLOSE_CALL, far: ranked[0].sim < FAR };
+}
+
 // Squash 384-dimension meaning-vectors down to a few dimensions we can draw, keeping as much spread as possible.
 // PCA by power iteration with deflation: plenty for ~50 points, and readable.
 export function pca(vectors, dims = 3, iterations = 100) {

@@ -60,7 +60,8 @@ chapters/0N-chapter-name/
 └── README.md
 ```
 
-Then add it to the `CHAPTERS` list in [`app.js`](app.js). Chapters are mounted into the single
+Then add it to the `CHAPTERS` list in [`app.js`](app.js), or to `BONUS` for a bonus chapter
+(shown after the story's finish screen, not counted in `story-done`). Chapters are mounted into the single
 story page, `index.html`, which carries the CSP.
 
 A new chapter should:

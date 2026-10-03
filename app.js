@@ -6,8 +6,10 @@ import { detect, downloadPlan, loadReplay, loadTokenizer, loadEmbedder } from '.
 import tokens from './chapters/01-tokens/chapter.js';
 import galaxy from './chapters/02-galaxy/chapter.js';
 import theater from './chapters/03-theater/chapter.js';
+import teach from './chapters/04-teach/chapter.js';
 
 const CHAPTERS = [tokens, galaxy, theater];
+const BONUS = [teach]; // after the story's finish screen; not part of "story-done" (docs/DESIGN.md)
 const MAX_SENTENCE = 120;
 
 const state = { story: null, sentence: '', preset: null, plan: null, journey: {} };
@@ -16,28 +18,41 @@ const dots = document.getElementById('progress');
 const tierBadge = document.getElementById('tier');
 let cleanup = null;
 
-function show(index) {
+// Clears the stage for a new screen. `step` is the position in Start, chapters…, Done.
+function reset(step) {
   cleanup?.();
   cleanup = null;
   stage.replaceChildren();
   dots.replaceChildren(...['Start', ...CHAPTERS.map((c) => c.short), 'Done'].map((label, i) =>
-    h('li', { class: i === index + 1 ? 'on' : i < index + 1 ? 'done' : '', 'aria-current': i === index + 1 ? 'step' : false }, label)));
+    h('li', { class: i === step ? 'on' : i < step ? 'done' : '', 'aria-current': i === step ? 'step' : false }, label)));
   tierBadge.textContent = state.preset ? '▶ Replay' : state.sentence ? '⚡ Live on your device' : '';
   window.scrollTo(0, 0);
+}
 
+function show(index) {
+  reset(index + 1);
   if (index < 0) return intro();
   if (index >= CHAPTERS.length) return countEvent('story-done'), finale();
   countEvent(`chapter-${index + 1}`);
+  page(CHAPTERS[index], `Chapter ${index + 1} of ${CHAPTERS.length}`,
+    () => show(index - 1), [index + 1 < CHAPTERS.length ? 'Next chapter →' : 'Finish →', () => show(index + 1)]);
+}
 
-  const chapter = CHAPTERS[index];
+function showBonus(index) {
+  reset(CHAPTERS.length + 1);
+  page(BONUS[index], `Bonus ${index + 1} of ${BONUS.length}`, () => show(CHAPTERS.length),
+    index + 1 < BONUS.length ? ['Next bonus →', () => showBonus(index + 1)] : ['Finish →', () => show(CHAPTERS.length)]);
+}
+
+function page(chapter, eyebrow, back, [nextLabel, next]) {
   const body = h('div', { class: 'chapter-body' });
   stage.append(
-    h('p', { class: 'eyebrow' }, `Chapter ${index + 1} of ${CHAPTERS.length}`),
+    h('p', { class: 'eyebrow' }, eyebrow),
     h('h2', { tabindex: '-1' }, chapter.title),
     h('section', { class: 'card' }, body),
     h('nav', { class: 'story-nav' },
-      h('button', { class: 'ghost', onclick: () => show(index - 1) }, '← Back'),
-      h('button', { class: 'primary', onclick: () => show(index + 1) }, index + 1 < CHAPTERS.length ? 'Next chapter →' : 'Finish →')),
+      h('button', { class: 'ghost', onclick: back }, '← Back'),
+      h('button', { class: 'primary', onclick: next }, nextLabel)),
   );
   stage.querySelector('h2').focus();
   cleanup = chapter.mount(body, { state, restartWith: usePreset }) ?? null;
@@ -173,7 +188,11 @@ function finale() {
         h('li', {}, h('strong', {}, 'It was chopped into tokens. '), 'AI never sees words — only numbered pieces.'),
         h('li', {}, h('strong', {}, 'It became a place in a galaxy. '), 'Meaning is a position: similar ideas sit close together.'),
         h('li', {}, h('strong', {}, 'A reply was guessed, one token at a time. '), 'The AI doesn’t know answers — it predicts likely next pieces.')),
-      h('p', { class: 'muted' }, 'Coming next in the playground: teach a model with your camera, run AI with the internet switched off — and meet Jarvis, an assistant built from these exact pieces.')),
+      h('p', { class: 'muted' }, 'Coming later: Jarvis, an assistant built from these exact pieces.')),
+    h('section', { class: 'card' },
+      h('h2', {}, 'Bonus rounds'),
+      h('p', { class: 'muted' }, 'You finished the story. Want more?'),
+      h('div', { class: 'presets' }, BONUS.map((b, i) => h('button', { class: 'chip', onclick: () => showBonus(i) }, `Bonus ${i + 1}: ${b.title}`)))),
     shareCard(),
     h('nav', { class: 'story-nav' },
       h('button', { class: 'ghost', onclick: () => show(CHAPTERS.length - 1) }, '← Back'),

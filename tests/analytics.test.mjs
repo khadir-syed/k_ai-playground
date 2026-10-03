@@ -18,7 +18,8 @@ test('only the live site counts', () => {
 
 test('every event the code sends is on the allowed list', async () => {
   const used = new Set();
-  for (const dir of ['', 'chapters/01-tokens/', 'chapters/02-galaxy/', 'chapters/03-theater/']) {
+  const chapterDirs = (await readdir(new URL('../chapters/', import.meta.url))).map((d) => `chapters/${d}/`);
+  for (const dir of ['', ...chapterDirs]) {
     for (const f of (await readdir(new URL(`../${dir}`, import.meta.url))).filter((n) => n.endsWith('.js'))) {
       const code = await readFile(new URL(`../${dir}${f}`, import.meta.url), 'utf8');
       for (const [, name] of code.matchAll(/countEvent\('([^']+)'\)/g)) used.add(name);

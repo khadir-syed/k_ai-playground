@@ -22,6 +22,23 @@ const STARS = {
   sports: ['scoring the winning goal', 'a cricket match on Sunday', 'running a marathon', 'swimming laps in the pool', 'the crowd cheers loudly', 'learning to ride a bike'],
 };
 
+// Bonus "Teach a Model": cards the visitor sorts (train) and cards the AI then guesses (test).
+// The last two test cards are tricky on purpose: one word, two meanings.
+const TEACH = {
+  groups: ['food', 'tech'],
+  train: [
+    ['a bowl of hot noodles', 'food'], ['my laptop keeps freezing', 'tech'],
+    ['strawberry ice cream', 'food'], ['charging my phone overnight', 'tech'],
+    ['grilled fish with rice', 'food'], ['a new video game console', 'tech'],
+    ['fresh bread from the oven', 'food'], ['the wifi password changed', 'tech'],
+  ],
+  test: [
+    ['I baked a chocolate cake', 'food'], ['My phone screen cracked', 'tech'],
+    ['Spicy curry for dinner', 'food'], ['Robots can sort packages', 'tech'],
+    ['My Apple watch needs charging', 'tech'], ['This website uses cookies', 'tech'],
+  ],
+};
+
 const MAX_REPLY_TOKENS = 40;
 const TOP_K = 10;
 
@@ -34,6 +51,12 @@ const lm = { tokenizer, model, Tensor };
 const stars = Object.entries(STARS).flatMap(([group, texts]) => texts.map((text) => ({ group, text })));
 const starVectors = await embed(extractor, stars.map((s) => s.text));
 stars.forEach((s, i) => (s.embedding = starVectors[i]));
+
+const cards = async (list) => {
+  const vectors = await embed(extractor, list.map(([text]) => text));
+  return list.map(([text, group], i) => ({ text, group, embedding: vectors[i] }));
+};
+const teach = { groups: TEACH.groups, train: await cards(TEACH.train), test: await cards(TEACH.test) };
 
 const presets = [];
 for (const text of PRESETS) {
@@ -62,6 +85,7 @@ const story = {
   recordedWith: { library: '@huggingface/transformers@4.3.0', dtype: 'q8', decoding: 'greedy', topK: TOP_K },
   presets,
   stars,
+  teach,
 };
 await writeFile(new URL('../replays/story.json', import.meta.url), JSON.stringify(story));
 console.log('wrote replays/story.json');

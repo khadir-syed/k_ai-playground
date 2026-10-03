@@ -22,7 +22,13 @@ Part of the k_ai series:
 | 2 | [Meaning is a place](chapters/02-galaxy/) | Your sentence as a star in a 3D galaxy of meaning, next to its nearest neighbours | Replay · Local |
 | 3 | [AI is a guessing machine](chapters/03-theater/) | A reply built token by token, with live odds and a temperature slider — tap a bar to choose the next word yourself | Replay · Local |
 
-At the end, you get a picture of **your sentence's journey** to share or save. It's made on your
+**Bonus round** (after the story):
+
+| | Chapter | What you see | Tiers |
+|---|---|---|---|
+| B1 | [You can teach an AI](chapters/04-teach/) | Sort examples into two groups, then watch it guess new ones. Name your own groups on your device | Replay · Local |
+
+At the end of the story, you get a picture of **your sentence's journey** to share or save. It's made on your
 device and nothing is uploaded.
 
 **No chapter needs an API key.** Ready-made sentences use recorded runs of real models and work

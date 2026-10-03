@@ -20,7 +20,7 @@ file disagree, the code wins and this file gets fixed in the same PR.
 | Shared engine | `engine/` is imported by every chapter, and later by Jarvis | A's parts become C's parts, so a fix is made once |
 | Runtime tiers | Replay → Local → bring-your-own-key | A visitor never sees a broken screen, only a simpler mode |
 | Keys | Claude + OpenAI, in memory only, sent only to the two provider APIs | See [SECURITY_CHECKLIST.md](../SECURITY_CHECKLIST.md) |
-| Analytics | Cookie-free GoatCounter, with page views and named events only | No consent banner on a phone, and typed text is never collected. Sent by `engine/analytics.js` (GoatCounter's own script would break our CSP), only on the live `*.github.io` site. Events: `start-ready-made`, `start-own-words`, `chapter-1…3`, `live-model`, `story-done`, `share-card-shared`, `share-card-saved`, all prefixed `k_ai-playground/`. |
+| Analytics | Cookie-free GoatCounter, with page views and named events only | No consent banner on a phone, and typed text is never collected. Sent by `engine/analytics.js` (GoatCounter's own script would break our CSP), only on the live `*.github.io` site. Events: `start-ready-made`, `start-own-words`, `chapter-1…3`, `live-model`, `story-done`, `share-card-shared`, `share-card-saved`, `bonus-teach`, `bonus-teach-own`, all prefixed `k_ai-playground/`. |
 | Language | English first | — |
 | Sharing | A "my sentence's journey" image on the finish screen, drawn on the visitor's device (`engine/sharecard.js`), shared with the phone's share sheet or saved; plus a link-preview image (`og-image.png`, source `tools/og-image.html`) | Every share brings the next visitor. Nothing is uploaded, so privacy stays simple |
 | Look and feel | The same warm stone and amber theme, brand header and "In short" card as [khadir-syed.github.io](https://khadir-syed.github.io/) and the other k_ai sites | One recognisable family across the series |
@@ -31,7 +31,7 @@ file disagree, the code wins and this file gets fixed in the same PR.
 | Tier | Runs | Needs | Used by |
 |---|---|---|---|
 | Replay | `replays/story.json`, recorded from real runs by `tools/record-replays.mjs` | Nothing | All chapters, every device |
-| Local | Models in the browser via transformers.js + ONNX Runtime (WebGPU if available, else WebAssembly) | The visitor agrees to a one-time download (shown in MB first) | Your own sentence (ch. 1–2), live chapter 3 |
+| Local | Models in the browser via transformers.js + ONNX Runtime (WebGPU if available, else WebAssembly) | The visitor agrees to a one-time download (shown in MB first) | Your own sentence (ch. 1–2), live chapter 3, your own groups (bonus 1) |
 | Bring your own key | Claude or OpenAI | The visitor's key | Planned for Jarvis. Note: Claude doesn't return token odds, so chapter 3's odds bars can only ever use Local or OpenAI. |
 
 Models are pinned to exact Hugging Face commits in [`engine/ai.js`](../engine/ai.js):
@@ -149,8 +149,11 @@ Adds a "taught it" line and an "ran offline" badge, only when the visitor did th
 ### Build order
 
 1. ✅ Pull the Plug spike on a real phone (throwaway, deleted).
-2. Chapters mount on their own (default sentence, empty `journey`), with a test.
-3. Bonus 1, Teach a Model, + recorded replay data.
+2. ✅ Chapters mount on their own: checked, no code needed. Chapters only *write* `state.journey`,
+   never read it, so opening one directly just needs a default sentence (done with museum mode).
+   `tests/chapters.test.mjs` now loads every chapter module.
+3. ✅ Bonus 1, Teach a Model (`chapters/04-teach/`), + recorded replay data. Also shows "a wild
+   guess" when a sentence is far from both groups (`FAR` in `engine/math.js`).
 4. Bonus 2, Pull the Plug, from what the spike showed.
 5. Museum mode, finish-screen bonus links.
 6. Share card, analytics events, chapter READMEs, this file, security checklist. Then review and push.

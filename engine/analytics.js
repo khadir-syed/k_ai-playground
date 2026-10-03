@@ -9,6 +9,7 @@ export const EVENTS = new Set([
   'chapter-1', 'chapter-2', 'chapter-3',
   'live-model', 'story-done',
   'share-card-shared', 'share-card-saved',
+  'bonus-teach', 'bonus-teach-own',
 ]);
 
 export function countURL(path, event = false) {

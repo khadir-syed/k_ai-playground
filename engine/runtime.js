@@ -22,6 +22,7 @@ export function downloadPlan({ wasm, webgpu }) {
   const runtime = webgpu ? MB.runtimeGpu : MB.runtimeCpu;
   return {
     starterMB: MB.tokenizer + MB.embed + runtime, // chapters 1–2 with your own sentence
+    embedMB: MB.embed + runtime,                   // bonus chapters: the meaning model only
     lmMB: webgpu ? MB.lmGpu : MB.lmCpu,           // chapter 3 live
     lm: webgpu ? { device: 'webgpu', dtype: 'q4f16' } : { device: 'wasm', dtype: 'q8' },
     fast: webgpu,
@@ -30,6 +31,7 @@ export function downloadPlan({ wasm, webgpu }) {
 
 let lib, caps;
 const loading = {};
+const ready = {};
 
 async function library() {
   if (lib) return lib;
@@ -49,9 +51,12 @@ async function library() {
 
 // Each loader runs once; later calls get the same promise. `onProgress(0..1)` is optional.
 function once(key, load) {
-  loading[key] ??= load().catch((err) => { delete loading[key]; throw err; });
+  loading[key] ??= load().then((v) => ((ready[key] = true), v), (err) => { delete loading[key]; throw err; });
   return loading[key];
 }
+
+// Already on this device? ('tokenizer', 'embed' or 'lm'). Lets a chapter skip the download offer.
+export const isReady = (key) => !!ready[key];
 
 function progressTracker(onProgress) {
   const files = {};

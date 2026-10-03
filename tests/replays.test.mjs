@@ -30,3 +30,12 @@ test('galaxy stars cover every family with real vectors', () => {
   assert.equal(groups.size, 6);
   for (const s of story.stars) assert.equal(s.embedding.length, 384);
 });
+
+test('teach cards: both groups in train and test, with real vectors', () => {
+  const { groups, train, test: tests } = story.teach;
+  assert.deepEqual(groups, ['food', 'tech']);
+  for (const list of [train, tests]) {
+    for (const g of groups) assert.ok(list.filter((c) => c.group === g).length >= 2, g);
+    for (const c of list) assert.equal(c.embedding.length, 384);
+  }
+});
