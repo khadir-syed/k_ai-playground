@@ -115,9 +115,16 @@ Shows that the AI runs on your device: turn on airplane mode, and it keeps worki
 - **Must not reload while offline:** the page itself isn't cached, only the model files are. The
   chapter says so.
 - Events sent while offline are lost (GoatCounter beacon fails quietly). Acceptable.
-- **To learn in the spike** (Android + Chrome, served from the laptop over Wi-Fi): do the events
-  fire in airplane mode, does inference keep working, and what a reload does. Over a LAN address
-  the page isn't a secure context, so WebGPU is off and this tests the WebAssembly path only.
+- **Spike result, 2026-10-03** (Android 10 + Chrome, served from the laptop over Wi-Fi, so
+  WebAssembly only and no Cache API):
+  - The model loaded in about 2.5 s; each guess took about 30 ms, online and offline alike.
+  - `offline` fired a few seconds after airplane mode went on, and `navigator.onLine` was
+    accurate. Every guess after it still worked.
+  - Reloading while offline showed a **blank screen**: everything in memory is gone. So the
+    chapter warns before and during offline: "Don't reload until you're back online."
+  - Raw similarities between a sentence and a group average are low (about 0.05–0.40) even when
+    the guess is right. Teach a Model shows which group is *closer* and by how much, never the raw
+    number as a "% sure".
 
 ### Museum mode
 
@@ -141,7 +148,7 @@ Adds a "taught it" line and an "ran offline" badge, only when the visitor did th
 
 ### Build order
 
-1. Pull the Plug spike on real phones (throwaway, not committed).
+1. ✅ Pull the Plug spike on a real phone (throwaway, deleted).
 2. Chapters mount on their own (default sentence, empty `journey`), with a test.
 3. Bonus 1, Teach a Model, + recorded replay data.
 4. Bonus 2, Pull the Plug, from what the spike showed.
