@@ -32,6 +32,7 @@ same pieces the Jarvis capstone is built from later. Fix a bug once, in
 k_ai-playground/
 ├── index.html          the story: "Follow one sentence through AI"
 ├── engine/             shared ES modules — runtime tiers, models, math
+├── boot.js             loads app.js; shows a "please refresh" message if a file fails to load
 ├── app.js              the story controller: picks the sentence, runs the chapters in order
 ├── chapters/           one folder per story chapter (01-tokens, 02-galaxy, …)
 ├── replays/            recorded real model runs (Replay tier + test data)

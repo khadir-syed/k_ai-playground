@@ -69,7 +69,7 @@ Plus the ONNX Runtime `.wasm` file: 27 MB with WebGPU, 14 MB without. Browsers c
 
 ## Publishing
 
-`.github/workflows/pages.yml` runs the self-checks, then publishes only the site files (`index.html`, `app.js`, `styles.css`, `og-image.png`, `engine/`, `chapters/`, `replays/`, `vendor/`) to GitHub Pages on every push to `main`. Actions are pinned to commit SHAs; Dependabot (`.github/dependabot.yml`) proposes updates for them and for `tools/`. `vendor/` is upgraded by hand.
+`.github/workflows/pages.yml` runs the self-checks, then publishes only the site files (`index.html`, `boot.js`, `app.js`, `styles.css`, `og-image.png`, `engine/`, `chapters/`, `replays/`, `vendor/`) to GitHub Pages on every push to `main`. Actions are pinned to commit SHAs; Dependabot (`.github/dependabot.yml`) proposes updates for them and for `tools/`. `vendor/` is upgraded by hand.
 
 ## Roadmap
 
