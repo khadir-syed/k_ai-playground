@@ -35,7 +35,7 @@ export default {
       tests, result,
       h('details', {},
         h('summary', {}, 'How did it decide?'),
-        h('p', {}, 'Every example became meaning-numbers, like the stars in chapter 2. The AI averaged each group to find its middle. A new sentence goes to whichever middle it’s closer to. That’s all “learning” means here.')),
+        h('p', {}, 'Every example turned into meaning-numbers, like the stars in chapter 2. The AI found the middle of each group. A new sentence goes to whichever middle it’s closer to. That’s all “learning” means here.')),
       h('details', {},
         h('summary', {}, 'Why does it get some wrong?'),
         h('p', {}, 'It only knows the examples you gave it. “Cookies” are a snack, but also a website thing, and none of your examples were about websites. Try it: put a card in the wrong group on purpose, then test again. Teach it badly, and it learns badly. Big AIs work the same way.')),
@@ -115,7 +115,7 @@ function ownGroups(state) {
         bar.replaceWith(form);
       } catch (err) {
         console.error(err);
-        bar.replaceWith(h('p', {}, 'The download didn’t work on this device or network. Parts 1 and 2 still work.'));
+        bar.replaceWith(h('p', {}, 'The download didn’t work. Parts 1 and 2 still work.'));
       }
     } }, `✏️ Use my own groups (~${state.plan.embedMB} MB, once)`);
     box.append(go);

@@ -18,6 +18,8 @@ sentence through tokens → meaning → prediction. Design and decisions: [docs/
 - Never hand-edit `replays/story.json`. Re-record it: `cd tools && npm run record`.
 - Changing a file in `vendor/` means following [vendor/README.md](vendor/README.md) → Upgrading.
 - Copy for visitors: a plain-English analogy first, one idea per screen, short enough for a phone.
+  On-screen text: readable by a 7-year-old. READMEs: a 12-year-old can follow the top part;
+  technical notes go under "For developers" at the end.
 - Docs describe the code as it is now. Update the README, DESIGN.md and chapter READMEs in the
   same commit.
 

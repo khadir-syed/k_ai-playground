@@ -24,8 +24,8 @@ export default {
       h('h3', {}, 'Your sentence’s closest neighbours'),
       neighbours,
       h('details', {},
-        h('summary', {}, 'Wait — 384 dimensions on a flat screen?'),
-        h('p', {}, 'We squash 384 directions down to the 3 that spread the stars out the most (a trick called PCA). Some distance gets lost in the squash, so the neighbour list below uses the full 384 numbers — that’s what an AI search actually uses. This is exactly how “search by meaning” (RAG) finds the right document.')),
+        h('summary', {}, 'Wait, 384 numbers on a flat screen?'),
+        h('p', {}, 'We squash 384 numbers down to 3, a bit like a toy’s shadow on a wall. (Grown-ups call this trick PCA.) Some detail gets lost in the squash, so the neighbour list below uses all 384 numbers. That’s also how AI search finds things by meaning, not just by matching words.')),
     );
 
     const stars = state.story.stars;
@@ -49,7 +49,7 @@ export default {
       draw();
     }, (err) => {
       console.error(err);
-      caption.textContent = 'Couldn’t load the meaning model. Go back and pick a ready-made sentence.';
+      caption.textContent = 'Couldn’t load the meaning AI. Go back and pick a ready-made sentence.';
     });
 
     const ctx = canvas.getContext('2d');

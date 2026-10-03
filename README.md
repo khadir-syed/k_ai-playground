@@ -2,44 +2,53 @@
 
 **▶ Try it: <https://khadir-syed.github.io/k_ai-playground/>**
 
-**See AI from the inside.** Type a sentence, then follow it through an AI: watch it get chopped
-into tokens, land as a star in a galaxy of meaning, and get answered one guess at a time — all in
-your browser, on your phone, with no account and no API key.
+**See AI from the inside.** Type a sentence and follow it through an AI, step by step. It works on
+your phone, it's free, and you don't need to sign up.
 
-Think of it like a glass-walled factory tour. Most people only ever see what comes out of an AI.
-This playground lets you walk the factory floor and watch every machine work on *your* words.
+Most people only see what comes *out* of an AI. Here you get a tour inside, like a factory with
+glass walls, and you watch every machine work on *your* words.
 
 Part of the k_ai series:
 [k_ai-basics](https://github.com/khadir-syed/k_ai-basics) (how AI works, in code) ·
 [k_ai-agent-skills](https://github.com/khadir-syed/k_ai-agent-skills) (putting AI to work) ·
 **k_ai-playground** (seeing AI work, in the browser).
 
-## The story: "Follow one sentence through AI"
+## The story: follow one sentence through AI
 
-| # | Chapter | What you see | Tiers |
-|---|---|---|---|
-| 1 | [AI doesn't read words](chapters/01-tokens/) | Your sentence chopped into numbered tokens | Replay · Local |
-| 2 | [Meaning is a place](chapters/02-galaxy/) | Your sentence as a star in a 3D galaxy of meaning, next to its nearest neighbours | Replay · Local |
-| 3 | [AI is a guessing machine](chapters/03-theater/) | A reply built token by token, with live odds and a temperature slider — tap a bar to choose the next word yourself | Replay · Local |
+| # | Chapter | What you'll see |
+|---|---|---|
+| 1 | [AI doesn't read words](chapters/01-tokens/) | Your sentence chopped into small numbered pieces |
+| 2 | [Meaning is a place](chapters/02-galaxy/) | Your sentence as a star in a galaxy, next to sentences that mean similar things |
+| 3 | [AI is a guessing machine](chapters/03-theater/) | A reply written one guess at a time. You can even pick the next word yourself |
 
-**Bonus round** (after the story):
+When you finish, you get a picture of **your sentence's journey** to share or save. It's made on
+your phone, and nothing is sent anywhere.
 
-| | Chapter | What you see | Tiers |
-|---|---|---|---|
-| B1 | [You can teach an AI](chapters/04-teach/) | Sort examples into two groups, then watch it guess new ones. Name your own groups on your device | Replay · Local |
-| B2 | [Pull the plug](chapters/05-plug/) | Turn on airplane mode, and the AI on your device keeps answering | Local |
+## Bonus rounds
 
-**Museum:** finishing the story opens the museum, where every exhibit can be visited in any order.
-The intro shows it locked. Returning visitors can go straight to it with the `#museum` link,
-because the site remembers nothing between visits.
+| | Chapter | What you'll see |
+|---|---|---|
+| B1 | [You can teach an AI](chapters/04-teach/) | Sort examples into two groups, and the AI learns to guess new ones. Make up your own groups too |
+| B2 | [Pull the plug](chapters/05-plug/) | Turn on airplane mode, and the AI on your phone keeps working |
 
-At the end of the story, you get a picture of **your sentence's journey** to share or save. It's made on your
-device and nothing is uploaded.
+## The museum
 
-**No chapter needs an API key.** Ready-made sentences use recorded runs of real models and work
-instantly on any device. Typing your own sentence downloads small AI models into your browser
-(about 40–50 MB, plus about 115–130 MB for live chapter 3), after you agree to it. Nothing you
-type leaves your device.
+Finish the story and the **museum** opens: every chapter, in any order. On the first page you'll
+see it locked. Coming back later? Use this link to go straight in:
+<https://khadir-syed.github.io/k_ai-playground/#museum> (the site doesn't remember you, on purpose).
+
+## Is it safe?
+
+- **No sign-up and no key.** Ready-made sentences start straight away. They show real AI results
+  we saved earlier.
+- **Your words stay on your device.** If you type your own sentence, the site asks before it
+  downloads a small AI to your device (about 40–50 MB, plus about 115–130 MB to make chapter 3
+  live). Nothing you type is ever sent anywhere.
+- **No cookies.** We only count visits and which chapters people finish, never what anyone types.
+
+---
+
+# For developers
 
 ## How the three tiers work
 

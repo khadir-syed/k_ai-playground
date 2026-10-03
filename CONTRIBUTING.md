@@ -75,7 +75,10 @@ A new chapter should:
    engine where it is tested.
 3. **Explain itself like the reader is five years old.** Plain-English
    analogy first, one idea per screen, no jargon without a one-line meaning
-   next to it. Short enough to read on a phone in a bus queue.
+   next to it. Short enough to read on a phone in a bus queue. **On screen,
+   a 7-year-old should follow it** (deeper detail can go in a "Why…?"
+   fold). **READMEs: a 12-year-old should follow the top part**, with
+   technical notes under a "For developers" heading at the end.
 4. **Work on a 360px-wide phone first**, then scale up to a laptop. Touch
    targets at least 44px. Respect `prefers-reduced-motion`.
 5. **Include a Mermaid diagram in its README if it genuinely adds clarity**

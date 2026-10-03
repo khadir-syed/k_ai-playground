@@ -32,7 +32,7 @@ export default {
       h('p', { class: 'bubble you' }, state.sentence),
       reply,
       h('h3', {}, 'Its top guesses for the next token'),
-      h('p', { class: 'fineprint' }, 'Percentages are shares of its 10 favourite guesses. It scored all 49,152 tokens it knows.'),
+      h('p', { class: 'fineprint' }, 'It scored all 49,152 pieces it knows. The bars show its top guesses, out of its 10 favourites.'),
       bars,
       h('div', { class: 'temp' },
         h('label', {}, 'Temperature ', tempLabel),
@@ -41,23 +41,23 @@ export default {
       mode,
       h('details', {},
         h('summary', {}, 'Why does it repeat itself?'),
-        h('p', {}, 'This is a tiny model (135 million numbers inside — big chat AIs have about a thousand times more). If it always takes the tallest bar, it can fall into a loop like “I don’t know. I don’t know.” Temperature adds a little randomness so it can escape. Big AIs do the same thing, they’re just much better at guessing.')),
+        h('p', {}, 'This is a tiny AI: 135 million numbers inside. Big chat AIs have about a thousand times more. If it always picks the tallest bar, it can get stuck in a loop, like “I don’t know. I don’t know.” Sliding towards 🔥 wild adds a little surprise so it can escape. Big AIs do the same thing. They’re just much better at guessing.')),
     );
 
     function renderMode() {
       if (lm) {
         mode.replaceChildren(h('p', {}, '⚡ Live on your device. Slide the temperature, or tap any bar to choose the next token yourself.'));
       } else if (!state.plan) {
-        mode.replaceChildren(h('p', {}, 'This browser can’t run the model live. Try a recorded run instead:'),
+        mode.replaceChildren(h('p', {}, 'This browser can’t run the AI live. Try a saved run instead:'),
           h('div', { class: 'row' }, state.story.presets.map((p) => h('button', { class: 'chip', onclick: () => restartWith(p) }, p.text))));
       } else {
         const go = h('button', { class: replay ? 'ghost' : 'primary', onclick: goLive }, `⚡ Make it live (~${state.plan.lmMB} MB, once)`);
         mode.replaceChildren(
           h('p', {}, replay
-            ? '▶ Replay of a real run. The AI took the tallest bar every time, so temperature only changes the odds here. Go live to see the story branch.'
+            ? '▶ This is a saved run. The AI always picked the tallest bar, so the slider only changes the bars. Make it live to see the reply change.'
             : 'Your own sentence needs the talking model on your device.'),
           go,
-          ...(state.plan.fast ? [] : [h('p', { class: 'fineprint' }, 'This device has no WebGPU, so live mode will be slow.')]));
+          ...(state.plan.fast ? [] : [h('p', { class: 'fineprint' }, 'This device has no fast AI chip (WebGPU), so live mode will be slow.')]));
       }
     }
 
@@ -72,7 +72,7 @@ export default {
         console.error(err);
         lm = null;
         renderMode();
-        mode.prepend(h('p', {}, 'The live model couldn’t start on this device. Replay still works.'));
+        mode.prepend(h('p', {}, 'The live AI couldn’t start on this device. The saved run still works.'));
       }
     }
 

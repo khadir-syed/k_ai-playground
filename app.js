@@ -107,11 +107,11 @@ function intro() {
     e.preventDefault();
     const text = input.value.trim().slice(0, MAX_SENTENCE);
     if (!text) return input.focus();
-    if (!plan) return notice.replaceChildren(h('p', {}, 'This browser can’t run AI models, so pick one of the ready-made sentences above.')), (notice.hidden = false);
+    if (!plan) return notice.replaceChildren(h('p', {}, 'This browser can’t run the AI, so pick one of the ready-made sentences above.')), (notice.hidden = false);
     notice.hidden = false;
     notice.replaceChildren(
       h('p', {}, h('strong', {}, 'To use your own words, the AI runs on your device.')),
-      h('p', {}, `One-time download: about ${plan.starterMB} MB (Wi-Fi recommended). Nothing you type leaves your device.`),
+      h('p', {}, `It’s a one-time download of about ${plan.starterMB} MB, so use Wi-Fi. What you type stays on your device.`),
       h('div', { class: 'row' },
         h('button', { class: 'primary', onclick: () => startLocal(text, notice) }, `Download ${plan.starterMB} MB & start`),
         h('button', { class: 'ghost', onclick: () => (notice.hidden = true) }, 'Not now')),
@@ -135,7 +135,7 @@ function intro() {
         h('label', {}, 'Or use your own words'),
         h('div', { class: 'row' }, input, h('button', { class: 'primary', type: 'submit' }, 'Go'))),
       notice,
-      h('p', { class: 'muted' }, 'Ready-made sentences use recorded runs of real AI models — instant, no download.')),
+      h('p', { class: 'muted' }, 'Ready-made sentences start straight away. They show real AI results we saved earlier.')),
     teaser(),
     siblingLinks(),
     footer(),
@@ -181,12 +181,12 @@ function shareCard() {
     h('a', { href: url, download: file.name }).click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     countEvent('share-card-saved');
-    status.textContent = 'Saved. Nothing was uploaded — the image was made on your device.';
+    status.textContent = 'Saved. The picture was made on your device, and nothing was sent anywhere.';
   }
 
   return h('section', { class: 'card share' },
     h('h2', {}, 'Your sentence’s journey, as a picture'),
-    h('p', { class: 'muted' }, 'Made on your device. Nothing is uploaded unless you choose to share it.'),
+    h('p', { class: 'muted' }, 'Made on your device. Nothing is sent anywhere unless you share it.'),
     canvas, buttons, status);
 }
 
@@ -225,7 +225,7 @@ async function startLocal(text, notice) {
     show(0);
   } catch (err) {
     console.error(err);
-    notice.replaceChildren(h('p', {}, 'The download didn’t work on this device or network. Pick a ready-made sentence instead — it works the same way.'));
+    notice.replaceChildren(h('p', {}, 'The download didn’t work. Pick a ready-made sentence instead. It works the same way.'));
   }
 }
 
@@ -235,9 +235,9 @@ function finale() {
       h('h2', { tabindex: '-1' }, 'What just happened to your sentence'),
       h('ol', { class: 'recap' },
         h('li', {}, h('strong', {}, 'It was chopped into tokens. '), 'AI never sees words — only numbered pieces.'),
-        h('li', {}, h('strong', {}, 'It became a place in a galaxy. '), 'Meaning is a position: similar ideas sit close together.'),
-        h('li', {}, h('strong', {}, 'A reply was guessed, one token at a time. '), 'The AI doesn’t know answers — it predicts likely next pieces.')),
-      h('p', { class: 'muted' }, 'Coming later: Jarvis, an assistant built from these exact pieces.')),
+        h('li', {}, h('strong', {}, 'It became a place in a galaxy. '), 'Sentences that mean similar things sit close together.'),
+        h('li', {}, h('strong', {}, 'A reply was guessed, one token at a time. '), 'The AI doesn’t know the answer. It guesses the next piece, again and again.')),
+      h('p', { class: 'muted' }, 'Coming soon: Jarvis, a helper made from these same pieces.')),
     h('section', { class: 'card' },
       h('h2', {}, 'Keep exploring'),
       h('p', { class: 'muted' }, 'You finished the story. Two bonus rounds, and the museum is open.'),

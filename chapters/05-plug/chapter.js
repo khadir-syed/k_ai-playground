@@ -23,11 +23,11 @@ export default {
     let extractor = null, offlineWin = false, owed = false;
 
     root.append(
-      h('p', { class: 'lead' }, 'A calculator works without the internet. Does AI? Most people think AI lives “in the cloud”. ', h('strong', {}, 'This one lives on your device.'), ' Let’s prove it.'),
+      h('p', { class: 'lead' }, 'A calculator works without the internet. Does AI? Lots of people think AI lives far away, on the internet. ', h('strong', {}, 'This one lives on your device.'), ' Let’s prove it.'),
       net, stage, result,
       h('details', {},
         h('summary', {}, 'Why can it work offline?'),
-        h('p', {}, 'The model is just a file of numbers. Once it’s downloaded into this page, your device does all the maths itself. Big chat AIs are too large for a phone, so they run in data centres. That’s the only reason they need the internet.')),
+        h('p', {}, 'This AI is just a file of numbers. Once it’s on your device, your device does all the maths itself. Big chat AIs are too big for a phone, so they live in huge computer buildings. That’s why they need the internet.')),
     );
 
     function renderNet() {
@@ -36,7 +36,7 @@ export default {
     }
 
     function renderStage() {
-      if (!state.plan) return stage.replaceChildren(h('p', { class: 'notice' }, 'This browser can’t run AI models, so this one can’t be tried here. Try it on a recent phone or laptop browser.'));
+      if (!state.plan) return stage.replaceChildren(h('p', { class: 'notice' }, 'This browser can’t run the AI, so you can’t try this here. Try a newer phone or laptop.'));
       if (!isReady('embed')) return stage.replaceChildren(offerDownload());
       const input = h('input', { type: 'text', maxlength: String(MAX_TEXT), placeholder: 'e.g. My phone screen cracked', autocomplete: 'off', 'aria-label': 'A sentence for the AI' });
       stage.replaceChildren(
@@ -48,12 +48,12 @@ export default {
           h('li', {}, 'Ask the AI: food or tech?')),
         h('form', { class: 'row own', onsubmit: (e) => { e.preventDefault(); ask(input.value); } },
           input, h('button', { class: 'primary', type: 'submit' }, 'Ask')),
-        ...(isReady('lm') ? [h('p', { class: 'muted' }, 'The talking model from chapter 3 is on this device too. Go back to it while offline, and it still writes.')] : []));
+        ...(isReady('lm') ? [h('p', { class: 'muted' }, 'The talking AI from chapter 3 is on this device too. Go back to it while offline, and it still writes.')] : []));
     }
 
     function offerDownload() {
       const go = h('button', { class: 'primary', onclick: async () => {
-        if (!navigator.onLine) return (msg.textContent = 'You’re offline. Reconnect first, download, then pull the plug.');
+        if (!navigator.onLine) return (msg.textContent = 'You’re offline. Turn the internet back on, download, then pull the plug.');
         const bar = h('progress', { max: '1', value: '0' });
         go.replaceWith(bar);
         try {
@@ -61,14 +61,14 @@ export default {
           renderStage();
         } catch (err) {
           console.error(err);
-          bar.replaceWith(h('p', {}, 'The download didn’t work on this device or network. Try again later.'));
+          bar.replaceWith(h('p', {}, 'The download didn’t work. Try again later.'));
         }
-      } }, `Download the meaning model (~${state.plan.embedMB} MB, once)`);
+      } }, `Download the AI (~${state.plan.embedMB} MB, once)`);
       const msg = h('p', { 'aria-live': 'polite' });
       return h('div', { class: 'notice' },
         h('p', {}, h('strong', {}, 'First, the AI has to be on your device.')),
-        h('p', {}, 'Ready-made sentences use recorded runs, and a recording proves nothing offline. So this needs the small meaning model from chapter 2 on your device, while you still have internet.'),
-        h('p', {}, 'Wi-Fi recommended. Nothing you type leaves your device.'),
+        h('p', {}, 'Ready-made sentences are saved results, so they can’t prove anything. You need the real AI on your device first, while you still have internet.'),
+        h('p', {}, 'Use Wi-Fi if you can. What you type stays on your device.'),
         go, msg);
     }
 
@@ -81,7 +81,7 @@ export default {
       const ms = Math.round(performance.now() - start);
       const offline = !navigator.onLine;
       const parts = [showVerdict(text, nearestGroup(v, centroids), (n) => LABEL[n]),
-        h('p', { class: 'muted' }, `Answered in ${ms} ms, ${offline ? 'with no internet ✈️' : 'online. Now pull the plug and ask again.'}`)];
+        h('p', { class: 'muted' }, `Answered in ${(ms / 1000).toFixed(2)} seconds, ${offline ? 'with no internet ✈️' : 'online. Now pull the plug and ask again.'}`)];
       if (offline) {
         state.journey.offline = true;
         if (!offlineWin) owed = true; // counted when the internet is back: a beacon sent now would be lost

@@ -20,7 +20,7 @@ export default {
       chips, count, toggle,
       h('details', {},
         h('summary', {}, 'Why do some pieces start with ␣?'),
-        h('p', {}, 'The ␣ is a space. This AI glues the space onto the front of the next word, so “ rain” and “rain” are two different tokens with two different numbers. Long or rare words get split into several pieces; common words are usually one piece.')),
+        h('p', {}, 'The ␣ is a space. This AI sticks the space onto the front of the next word. So “ rain” and “rain” are two different tokens, with two different numbers. Common words are usually one piece. Long or rare words get chopped into a few.')),
     );
 
     const tokensPromise = state.preset
@@ -29,7 +29,7 @@ export default {
     let list = [];
     tokensPromise.then((t) => { list = t; state.journey.tokens = t; render(); }, (err) => {
       console.error(err);
-      chips.replaceChildren(h('p', {}, 'Couldn’t load the tokenizer. Go back and pick a ready-made sentence.'));
+      chips.replaceChildren(h('p', {}, 'Couldn’t load the word-chopper. Go back and pick a ready-made sentence.'));
     });
 
     function render() {
