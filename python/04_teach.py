@@ -9,7 +9,9 @@ import sys
 
 import kai
 
-MIN_EACH = 2
+MIN_EACH = 2  # same limits as the site's "Teach your own" form
+MAX_NAME = 20
+MAX_EXAMPLES = 8
 
 
 def verdict_line(text, verdict):
@@ -21,15 +23,17 @@ def verdict_line(text, verdict):
 def own_groups(embedder):
     groups = {}
     for letter in "AB":
-        name = input(f"\nGroup {letter} name (e.g. Cats): ").strip()[:20]
-        print(f"Examples for {name}, one per line. Empty line to finish:")
-        examples = list(iter(lambda: input("  > ").strip()[: kai.MAX_TEXT], ""))
-        if not name or len(examples) < MIN_EACH:
-            sys.exit(f"Each group needs a name and at least {MIN_EACH} examples.")
+        name = kai.ask(f"\nGroup {letter} name (e.g. Cats): ", MAX_NAME)
+        if not name or name.lower() in map(str.lower, groups):
+            sys.exit("Give the two groups two different names.")
+        print(f"Examples for {name}, one per line (up to {MAX_EXAMPLES}). Empty line to finish:")
+        examples = list(iter(lambda: kai.ask("  > "), ""))[:MAX_EXAMPLES]
+        if len(examples) < MIN_EACH:
+            sys.exit(f"Each group needs at least {MIN_EACH} examples.")
         groups[name] = examples
     centroids = {name: kai.mean(kai.embed(embedder, examples)) for name, examples in groups.items()}
     print("\nLearned! Type sentences to test it. Empty line to stop.")
-    for text in iter(lambda: input("\nTest > ").strip()[: kai.MAX_TEXT], ""):
+    for text in iter(lambda: kai.ask("\nTest > "), ""):
         print(verdict_line(text, kai.nearest_group(kai.embed(embedder, [text])[0], centroids)))
 
 

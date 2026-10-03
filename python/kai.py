@@ -90,6 +90,15 @@ def sentence_arg(default):
     return text[:MAX_TEXT]
 
 
+def ask(prompt, limit=MAX_TEXT):
+    """input(), trimmed and cut to `limit` letters. Ctrl-C or Ctrl-D ends quietly, without a Python error."""
+    try:
+        return input(prompt).strip()[:limit]
+    except (EOFError, KeyboardInterrupt):
+        print()
+        sys.exit()
+
+
 # ---------- Models (Hugging Face transformers) ----------
 
 def _transformers():

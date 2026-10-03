@@ -12,6 +12,7 @@ os.environ["HF_HUB_OFFLINE"] = "1"  # never touch the internet, even to check fo
 import kai  # noqa: E402
 
 teach = kai.load_story()["teach"]
+kai._transformers()  # missing packages get their own message, not the one below
 try:
     embedder = kai.load_embedder()
 except SystemExit:
@@ -23,7 +24,7 @@ centroids = {
 }
 print("\n🔌 This script never uses the internet. Turn your Wi-Fi off now, if you like.")
 print("Type something, and the AI guesses: food or tech? Empty line to stop.")
-for text in iter(lambda: input("\n> ").strip()[: kai.MAX_TEXT], ""):
+for text in iter(lambda: kai.ask("\n> "), ""):
     start = time.perf_counter()
     (best, _), _ = kai.nearest_group(kai.embed(embedder, [text])[0], centroids)["ranked"]
     print(f"{best}  (answered in {(time.perf_counter() - start) * 1000:.0f} ms, on this computer)")

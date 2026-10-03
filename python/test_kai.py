@@ -29,6 +29,22 @@ for key, model in kai.SITE_MODELS.items():
     assert re.search(rf"{key}: \{{ id: '{re.escape(model['id'])}', revision: '{model['revision']}' \}}", ai_js), key
 assert kai.MODELS["lm"] == kai.SITE_MODELS["lm"]
 
+
+def number(path, name):
+    """A constant like `NAME = 40` from a site or Python file."""
+    return float(re.search(rf"\b{name} = ([\d.]+)", (kai.ROOT / path).read_text(encoding="utf-8"))[1])
+
+
+# Python and the site use the same limits, so the two can't quietly drift apart.
+assert number("engine/math.js", "CLOSE_CALL") == kai.CLOSE_CALL
+assert number("engine/math.js", "FAR") == kai.FAR
+assert number("app.js", "MAX_SENTENCE") == kai.MAX_TEXT
+assert number("chapters/03-theater/chapter.js", "MAX_TOKENS") == number("python/03_theater.py", "MAX_REPLY_TOKENS")
+for chapter in ("04-teach", "05-plug"):
+    assert number(f"chapters/{chapter}/chapter.js", "MAX_TEXT") == kai.MAX_TEXT, chapter
+for name in ("MIN_EACH", "MAX_NAME", "MAX_EXAMPLES"):
+    assert number("chapters/04-teach/chapter.js", name) == number("python/04_teach.py", name), name
+
 # Teach a Model, on the site's recorded meaning-numbers: 5 right, "cookies" wrong on purpose.
 teach = kai.load_story()["teach"]
 centroids = {g: kai.mean([c["embedding"] for c in teach["train"] if c["group"] == g]) for g in teach["groups"]}

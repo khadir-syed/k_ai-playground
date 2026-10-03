@@ -30,17 +30,20 @@ flowchart LR
 
 ## What you need
 
-- Python 3.12 or newer.
+- Python 3.12 or newer. To check, type `python3 --version` in your terminal (see step 1).
 - About 1 GB of free space for the tools, plus about 500 MB for the models.
 - No account, no password, no API key.
 
 ## How to run it, step by step
 
-**1. Open your terminal**, and go into this folder:
+**1. Open your terminal**, and go into this folder. The terminal is a window where you type commands.
+On a Mac, it's the app called **Terminal**. On Windows, it's **PowerShell**.
 
 ```bash
 cd python
 ```
+
+On Windows, type `py` wherever this page says `python3`.
 
 **2. Make a clean little box for the tools**, so they don't mix with anything else on your computer:
 
@@ -168,6 +171,8 @@ checks:
 
 - The maths.
 - That `SITE_MODELS` matches `engine/ai.js`.
+- That the limits match the site: 40 reply tokens, 120 letters, the Teach form's limits, and the
+  close-call and far-away thresholds.
 - That the Teach cards still give 5 right and 1 wrong.
 - That every chapter's `python:` link points to a file here.
 
