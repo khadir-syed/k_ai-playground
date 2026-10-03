@@ -5,9 +5,9 @@ work out the pattern. Show them wrong examples, and they learn the wrong pattern
 
 **What you do:**
 1. Sort 8 cards into 🍕 Food or 💻 Tech.
-2. Tap a card the AI has never seen, and it guesses the group. Two are tricky on purpose:
-   "Robots can sort packages" (none of the examples were about robots) and "This website uses
-   cookies" (a snack word used for a website thing).
+2. Tap a card the AI has never seen, and it guesses the group. One is tricky on purpose:
+   "This website uses cookies" (a snack word used for a website thing). With honest sorting it
+   gets the other five right.
 3. On your device only: name **your own two groups**, write a few examples for each, and test
    it with any sentence.
 

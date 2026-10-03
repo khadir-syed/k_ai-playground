@@ -23,7 +23,7 @@ const STARS = {
 };
 
 // Bonus "Teach a Model": cards the visitor sorts (train) and cards the AI then guesses (test).
-// The last two test cards are tricky on purpose: one word, two meanings.
+// The last test card is tricky on purpose: one word, two meanings.
 const TEACH = {
   groups: ['food', 'tech'],
   train: [
@@ -34,7 +34,7 @@ const TEACH = {
   ],
   test: [
     ['I baked a chocolate cake', 'food'], ['My phone screen cracked', 'tech'],
-    ['Spicy curry for dinner', 'food'], ['Robots can sort packages', 'tech'],
+    ['Spicy curry for dinner', 'food'], ['The printer is out of ink', 'tech'],
     ['My Apple watch needs charging', 'tech'], ['This website uses cookies', 'tech'],
   ],
 };

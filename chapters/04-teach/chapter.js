@@ -36,7 +36,7 @@ export default {
         h('p', {}, 'Every example became meaning-numbers, like the stars in chapter 2. The AI averaged each group to find its middle. A new sentence goes to whichever middle it’s closer to. That’s all “learning” means here.')),
       h('details', {},
         h('summary', {}, 'Why does it get some wrong?'),
-        h('p', {}, 'It only knows the examples you gave it. None of them were about robots, so it had to guess. “Cookies” are a snack, but also a website thing, and none of your examples were about websites. Try it: put a card in the wrong group on purpose, then test again. Teach it badly, and it learns badly. Big AIs work the same way.')),
+        h('p', {}, 'It only knows the examples you gave it. “Cookies” are a snack, but also a website thing, and none of your examples were about websites. Try it: put a card in the wrong group on purpose, then test again. Teach it badly, and it learns badly. Big AIs work the same way.')),
       ...(state.plan ? [ownGroups(state)] : []),
     );
 
