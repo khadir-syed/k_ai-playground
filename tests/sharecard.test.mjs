@@ -24,5 +24,12 @@ test('long inputs are clipped, extra tokens summarised', () => {
 
 test('missing chapters are left off, not faked', () => {
   const c = cardContent('Hello', {});
-  assert.deepEqual([c.tokens, c.neighbour, c.reply], [[], null, null]);
+  assert.deepEqual([c.tokens, c.neighbour, c.reply, c.taught, c.offline], [[], null, null, null, false]);
+});
+
+test('bonus rounds add a taught line and an offline badge', () => {
+  const c = cardContent('Hello', { taught: { test: 'z'.repeat(100), guess: 'food' }, offline: true });
+  assert.equal(c.taught.test.length, 60);
+  assert.equal(c.taught.guess, 'food');
+  assert.equal(c.offline, true);
 });

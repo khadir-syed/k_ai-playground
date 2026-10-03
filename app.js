@@ -41,8 +41,14 @@ function show(index) {
 
 function showBonus(index) {
   reset(CHAPTERS.length + 1);
-  page(BONUS[index], `Bonus ${index + 1} of ${BONUS.length}`, () => show(CHAPTERS.length),
-    index + 1 < BONUS.length ? ['Next bonus →', () => showBonus(index + 1)] : ['Finish →', () => show(CHAPTERS.length)]);
+  page(BONUS[index], `Bonus ${index + 1} of ${BONUS.length}`, showFinale,
+    index + 1 < BONUS.length ? ['Next bonus →', () => showBonus(index + 1)] : ['Finish →', showFinale]);
+}
+
+// Back to the finish screen from a bonus round, without counting "story-done" twice.
+function showFinale() {
+  reset(CHAPTERS.length + 1);
+  finale();
 }
 
 // The museum: every exhibit, in any order. Reached from the finish screen or the #museum link

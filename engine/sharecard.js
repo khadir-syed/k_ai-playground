@@ -20,6 +20,8 @@ export function cardContent(sentence, journey = {}) {
     tokenCount: tokens.length,
     neighbour: journey.neighbour ? { text: clip(journey.neighbour.text, 40), pct: Math.round(journey.neighbour.sim * 100) } : null,
     reply: journey.reply?.trim() ? clip(journey.reply.trim().replace(/\s+/g, ' '), 120) : null,
+    taught: journey.taught ? { test: clip(journey.taught.test, 60), guess: clip(journey.taught.guess, 20) } : null,
+    offline: !!journey.offline,
   };
 }
 
@@ -53,6 +55,13 @@ function paint(ctx, content, H, avatar) {
   text(ctx, 'K', bx, 118, `900 40px ${FONT}`, C.amber);
   text(ctx, ' THE TECHMAN', bx + ctx.measureText('K').width, 118, `900 40px ${FONT}`, '#fff');
   text(ctx, 'AI PLAYGROUND', bx, 156, `700 22px ${FONT}`, 'rgba(253,230,138,0.9)', 2);
+  if (content.offline) {
+    ctx.font = `800 22px ${FONT}`;
+    const label = '✈️ RAN OFFLINE', w = ctx.measureText(label).width + 48;
+    roundRect(ctx, W - 72 - w, 96, w, 48, 24, 'rgba(251,191,36,0.16)');
+    ctx.strokeStyle = C.amber; ctx.lineWidth = 2; ctx.stroke();
+    text(ctx, label, W - 72 - w + 24, 128, ctx.font, C.amber, 1);
+  }
 
   text(ctx, 'MY SENTENCE’S JOURNEY', 72, 262, `900 58px ${FONT}`, '#fff');
   text(ctx, 'THROUGH AI', 72, 326, `900 58px ${FONT}`, C.amber);
@@ -86,6 +95,10 @@ function paint(ctx, content, H, avatar) {
   }
   if (content.reply) {
     y = section(ctx, y, '3 · THE AI GUESSED A REPLY', (top, draw) => wrap(ctx, `“${content.reply}”`, 112, top + 40, W - 224, 40, `500 32px ${FONT}`, C.soft, draw));
+  }
+  if (content.taught) {
+    const guess = content.taught.guess[0].toUpperCase() + content.taught.guess.slice(1);
+    y = section(ctx, y, 'BONUS · I TAUGHT AN AI', (top, draw) => wrap(ctx, `“${content.taught.test}” → ${guess}`, 112, top + 40, W - 224, 40, `600 32px ${FONT}`, '#fff', draw));
   }
 
   // Footer: an invitation, not an ad

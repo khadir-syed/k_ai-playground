@@ -22,7 +22,7 @@ file disagree, the code wins and this file gets fixed in the same PR.
 | Keys | Claude + OpenAI, in memory only, sent only to the two provider APIs | See [SECURITY_CHECKLIST.md](../SECURITY_CHECKLIST.md) |
 | Analytics | Cookie-free GoatCounter, with page views and named events only | No consent banner on a phone, and typed text is never collected. Sent by `engine/analytics.js` (GoatCounter's own script would break our CSP), only on the live `*.github.io` site. Events: `start-ready-made`, `start-own-words`, `chapter-1…3`, `live-model`, `story-done`, `share-card-shared`, `share-card-saved`, `bonus-teach`, `bonus-teach-own`, `bonus-plug`, `plug-offline` (sent once back online), `museum-open`, all prefixed `k_ai-playground/`. |
 | Language | English first | — |
-| Sharing | A "my sentence's journey" image on the finish screen, drawn on the visitor's device (`engine/sharecard.js`), shared with the phone's share sheet or saved; plus a link-preview image (`og-image.png`, source `tools/og-image.html`) | Every share brings the next visitor. Nothing is uploaded, so privacy stays simple |
+| Sharing | A "my sentence's journey" image on the finish screen (plus bonus-round lines when played), drawn on the visitor's device (`engine/sharecard.js`), shared with the phone's share sheet or saved; plus a link-preview image (`og-image.png`, source `tools/og-image.html`) | Every share brings the next visitor. Nothing is uploaded, so privacy stays simple |
 | Look and feel | The same warm stone and amber theme, brand header and "In short" card as [khadir-syed.github.io](https://khadir-syed.github.io/) and the other k_ai sites | One recognisable family across the series |
 | Gate to Phase C (Jarvis) | 10K visits a month **and** at least 40% of first-time visitors finishing the story. Stars are a bonus signal. | Measures the non-technical audience and actual learning, not just developer interest |
 
@@ -144,7 +144,8 @@ story is running, so every chapter must mount with an empty `state.journey`.
 
 ### Share card
 
-Adds a "taught it" line and an "ran offline" badge, only when the visitor did those.
+Adds a "Bonus · I taught an AI" line (the last test sentence and its guess) and a "✈️ Ran offline"
+badge, only when the visitor did those. The card grows taller to fit, as before.
 
 ### Build order
 
@@ -158,4 +159,5 @@ Adds a "taught it" line and an "ran offline" badge, only when the visitor did th
 5. ✅ Museum mode (`museum()` in `app.js`; each chapter exports an `icon` and a one-line `blurb`),
    intro teaser, finish-screen bonus and museum links. Opening an exhibit from the museum doesn't
    count `chapter-N`, so the story funnel stays clean.
-6. Share card, analytics events, chapter READMEs, this file, security checklist. Then review and push.
+6. ✅ Share card, analytics events, chapter READMEs, this file, security checklist. Returning to the
+   finish screen from a bonus round no longer counts `story-done` twice. Then: phone test, review, push.
