@@ -43,3 +43,4 @@ flowchart LR
   all-MiniLM-L6-v2 model). No API key.
 - **Engine used:** `embed()` in [`engine/ai.js`](../../engine/ai.js); `pca()`, `project()` and
   `cosine()` in [`engine/math.js`](../../engine/math.js).
+- **Python twin:** [`python/02_galaxy.py`](../../python/02_galaxy.py) does the same thing on your computer.

@@ -34,3 +34,4 @@ internet. This one lives on your phone, and you can prove it.
   `nearestGroup()` in [`engine/math.js`](../../engine/math.js); `isReady()` in
   [`engine/runtime.js`](../../engine/runtime.js). Reuses the cards and `showVerdict()` from
   [Bonus 1](../04-teach/).
+- **Python twin:** [`python/05_plug.py`](../../python/05_plug.py) does the same thing on your computer.

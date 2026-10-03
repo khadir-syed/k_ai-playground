@@ -29,3 +29,4 @@ stamped on it. You can't see the words any more, only the numbers. That's how an
 - **Tiers:** Replay (ready-made sentences) · Local (your own sentence, using the 2 MB SmolLM2
   tokenizer). No API key.
 - **Engine used:** `tokenize()` in [`engine/ai.js`](../../engine/ai.js).
+- **Python twin:** [`python/01_tokens.py`](../../python/01_tokens.py) does the same thing on your computer.

@@ -37,6 +37,7 @@ k_ai-playground/
 ├── chapters/           one folder per story chapter (01-tokens, 02-galaxy, …)
 ├── replays/            recorded real model runs (Replay tier + test data)
 ├── vendor/             pinned third-party JS, committed and hash-checked
+├── python/             each chapter as a Python program (python/README.md) — never shipped
 ├── tools/              offline scripts (e.g. recording replays) — never shipped
 ├── tests/              node --test self-checks, no framework
 └── docs/               design notes
@@ -57,7 +58,7 @@ Every chapter must work in all tiers it claims, and must fall back silently
 
 ```text
 chapters/0N-chapter-name/
-├── chapter.js          (exports { short, title, icon, blurb, mount(root, ctx) } — UI only; logic belongs in engine/)
+├── chapter.js          (exports { short, title, icon, python, blurb, mount(root, ctx) } — UI only; logic belongs in engine/)
 └── README.md
 ```
 
@@ -87,7 +88,9 @@ A new chapter should:
    `node:assert`, built into Node — no test framework) that exercises the
    real engine logic it relies on and fails if that logic breaks. It runs
    offline, with no model download.
-7. **State clearly which tiers it supports**, in its README and in the
+7. **Ship its Python twin** in [`python/`](python/), named in the chapter's `python:` export.
+   `python/test_kai.py` fails if the file is missing.
+8. **State clearly which tiers it supports**, in its README and in the
    chapter table in the root [README.md](README.md).
 
 ## Security rules that are not negotiable
@@ -122,7 +125,7 @@ These are summarised here and enforced by
 
 ## Testing your change
 
-1. Run the self-checks: `node --test "tests/*.test.mjs"` — all must pass.
+1. Run the self-checks: `node --test "tests/*.test.mjs"` and `python3 python/test_kai.py` — all must pass.
 2. Serve the repo locally (`python3 -m http.server 8000`) and actually use
    the chapter in a browser at **phone width (360–390px) and laptop width**,
    in Replay tier and in every other tier it claims.
@@ -130,7 +133,8 @@ These are summarised here and enforced by
 4. If a chapter has a key mode, confirm it fails with a clear, non-crashing
    message for a missing or wrong key.
 5. If anything in `tools/` changed, run `npm audit` there with no unresolved
-   high/critical findings.
+   high/critical findings. If `python/requirements.txt` changed, run
+   `pip-audit -r requirements.txt` there, and `python same_numbers.py` after any model or replay change.
 
 ## Pull request checklist
 
@@ -140,7 +144,7 @@ This mirrors [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md):
 - [ ] Visitor keys stay in memory only and reach only the two provider APIs.
 - [ ] CSP unchanged, or every new origin justified in the PR.
 - [ ] Vendored files, ONNX runtime and model revisions still pinned.
-- [ ] `node --test "tests/*.test.mjs"` passes.
+- [ ] `node --test "tests/*.test.mjs"` and `python3 python/test_kai.py` pass.
 - [ ] Tested at phone and laptop width; console free of errors and CSP
       violations.
 - [ ] The chapter's README (and any diagram) matches exactly what the code

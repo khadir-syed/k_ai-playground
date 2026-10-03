@@ -11,6 +11,7 @@ const MAX_TEXT = 120;
 export default {
   short: 'Offline',
   icon: '🔌',
+  python: '05_plug.py', // its twin in python/
   blurb: 'Airplane mode on. The AI keeps working.',
   title: 'Pull the plug',
   mount(root, { state }) {

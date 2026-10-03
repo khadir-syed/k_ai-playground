@@ -14,6 +14,7 @@ const MAX_NAME = 20, MAX_TEXT = 120, MAX_EXAMPLES = 8;
 export default {
   short: 'Teach',
   icon: '🧠',
+  python: '04_teach.py', // its twin in python/
   blurb: 'Sort examples, and the AI learns the pattern.',
   title: 'You can teach an AI',
   mount(root, { state }) {

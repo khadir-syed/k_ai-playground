@@ -28,6 +28,8 @@ sentence through tokens → meaning → prediction. Design and decisions: [docs/
 ```bash
 python3 -m http.server 8000          # serve locally → http://localhost:8000
 node --test "tests/*.test.mjs"       # self-checks (offline, no model download)
+python3 python/test_kai.py           # Python twins self-check (standard library only)
+cd python && python same_numbers.py # Python vs the site's exact numbers (needs requirements.txt)
 cd tools && npm install && npm run record   # re-record replays from real models
 playwright screenshot --viewport-size "1200,630" "file://$PWD/tools/og-image.html" og-image.png   # link-preview image
 ```

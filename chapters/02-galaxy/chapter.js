@@ -11,6 +11,7 @@ const COLORS = { weather: '#7dd3fc', animals: '#fb923c', food: '#fb7185', tech: 
 export default {
   short: 'Meaning',
   icon: '🌌',
+  python: '02_galaxy.py', // its twin in python/
   blurb: 'Your sentence as a star in a galaxy of meaning.',
   title: 'Meaning is a place',
   mount(root, { state }) {

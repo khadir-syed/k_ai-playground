@@ -11,7 +11,7 @@ async function files(dir, ext) {
   const out = [];
   for (const e of await readdir(new URL(dir, root), { withFileTypes: true })) {
     const p = `${dir}${e.name}`;
-    if (e.isDirectory() && !['vendor', 'tools', 'tests', 'node_modules', '.git'].includes(e.name)) out.push(...await files(`${p}/`, ext));
+    if (e.isDirectory() && !['vendor', 'tools', 'tests', 'node_modules', '.git', '.venv'].includes(e.name)) out.push(...await files(`${p}/`, ext));
     else if (p.endsWith(ext)) out.push(p);
   }
   return out;

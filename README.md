@@ -40,6 +40,11 @@ Finish the story and the **museum** opens: every chapter, in any order. On the f
 see it locked. Coming back later? Use this link to go straight in:
 <https://khadir-syed.github.io/k_ai-playground/#museum> (the site doesn't remember you, on purpose).
 
+## For coders: the same thing in Python
+
+Every page is also a short Python program you can run on your computer, with the same models and
+sentences. See [`python/`](python/).
+
 ## Is it safe?
 
 - **No sign-up and no key.** Ready-made sentences start straight away. They show real AI results
@@ -85,6 +90,7 @@ You need Python 3 (to serve the files) and Node.js 20+ (only for the self-checks
 
    ```bash
    node --test "tests/*.test.mjs"
+   python3 python/test_kai.py
    ```
 
 ## What's inside
@@ -95,6 +101,7 @@ You need Python 3 (to serve the files) and Node.js 20+ (only for the self-checks
 | [`chapters/`](chapters/) | One folder per story chapter: UI only, logic stays in `engine/` |
 | [`replays/`](replays/) | Recorded real model runs (Replay tier + test data) |
 | [`vendor/`](vendor/) | Pinned, hash-checked third-party JavaScript |
+| [`python/`](python/) | Each chapter as a Python program, plus `same_numbers.py`, which proves Python gets the site's exact numbers. Not shipped to the site. |
 | [`tools/`](tools/) | Offline scripts, such as re-recording replays. Never shipped to the site. |
 | [`tests/`](tests/) | Self-checks, including security rules |
 | [`docs/DESIGN.md`](docs/DESIGN.md) | Why it's built this way |

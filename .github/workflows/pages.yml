@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: '24'
       - run: node --test "tests/*.test.mjs"
+      - run: python3 python/test_kai.py  # standard library only, no model download
 
   deploy:
     needs: test

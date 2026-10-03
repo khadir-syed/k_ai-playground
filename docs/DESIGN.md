@@ -69,15 +69,15 @@ Plus the ONNX Runtime `.wasm` file: 27 MB with WebGPU, 14 MB without. Browsers c
 
 ## Publishing
 
-`.github/workflows/pages.yml` runs the self-checks, then publishes only the site files (`index.html`, `boot.js`, `app.js`, `styles.css`, `og-image.png`, `engine/`, `chapters/`, `replays/`, `vendor/`) to GitHub Pages on every push to `main`. Actions are pinned to commit SHAs; Dependabot (`.github/dependabot.yml`) proposes updates for them and for `tools/`. `vendor/` is upgraded by hand.
+`.github/workflows/pages.yml` runs the self-checks, then publishes only the site files (`index.html`, `boot.js`, `app.js`, `styles.css`, `og-image.png`, `engine/`, `chapters/`, `replays/`, `vendor/`) to GitHub Pages on every push to `main`. Actions are pinned to commit SHAs; Dependabot (`.github/dependabot.yml`) proposes updates for them, `tools/` and `python/`. `vendor/` is upgraded by hand.
 
 ## Roadmap
 
 | Phase | Ships | Gate to move on |
 |---|---|---|
 | **A1** ✅ | Runtime tiers, story chapters 1–3, replays, self-checks, GoatCounter, GitHub Pages workflow, share card, link preview | Works on iPhone, Android and laptop in every tier |
-| A2 | Two bonus chapters ("Teach a Model", "Pull the Plug") and museum mode. See [Phase A2 plan](#phase-a2-plan) | The gate above |
-| A2.5 | Python twins for the Build door (`python/`, not published to the site) | — |
+| **A2** ✅ | Two bonus chapters ("Teach a Model", "Pull the Plug") and museum mode. See [Phase A2 plan](#phase-a2-plan) | The gate above |
+| **A2.5** ✅ | Python twins for coders (`python/`, not published to the site). See [Phase A2.5](#phase-a25-python-twins) | — |
 | C1 | Text-only Jarvis with a live step view you can pause and steer: memory (engine embeddings), reasoning (bring your own key), skills from k_ai-agent-skills | Bring-your-own-key flow passes the security checklist |
 | C2 | Tools and the finished non-technical demo | — |
 
@@ -161,3 +161,26 @@ badge, only when the visitor did those. The card grows taller to fit, as before.
    count `chapter-N`, so the story funnel stays clean.
 6. ✅ Share card, analytics events, chapter READMEs, this file, security checklist. Returning to the
    finish screen from a bonus round no longer counts `story-done` twice. Then: phone test, review, push.
+
+## Phase A2.5: Python twins
+
+Decided 2026-10-03. Every chapter has a short Python program in [`python/`](../python/) that does
+the same thing, for coders and curious learners.
+
+| Decision | Choice | Why |
+|---|---|---|
+| Reader | Developers and learners | The README top follows the k_ai-basics step-by-step style; "For developers" sits at the end |
+| Stack | Both: `transformers` + PyTorch for the chapters, `onnxruntime` for `same_numbers.py` | The chapters teach the stack used at work; `same_numbers.py` loads the site's exact q8 files and proves the site's numbers are real |
+| Link from the site | Each chapter page links to its twin; the finish screen links to the folder | Same pattern as k_ai-basics. Plain links, so no CSP change and no new analytics event |
+| CI | `python3 python/test_kai.py` in the test job | Standard library only, like the JS self-checks: no packages, no model download |
+| Packaging | `pip` + exact versions in `requirements.txt`, `pip-audit` before push | Familiar to beginners; Dependabot proposes updates |
+
+What we found:
+
+- `same_numbers.py` matches the site exactly: 160 of 160 chat-model steps (top-10 ids, logits
+  within 0.001) and 54 meaning vectors within 0.0001.
+- q8 meaning numbers depend on the **batch** a sentence is in, because the 8-bit scale is computed
+  over the whole batch. The check reuses the recording's batches.
+- Full-precision SmolLM2 answers "Will it rain tomorrow?" sensibly. The site's q8 copy loops
+  "I don't know." The python/ README turns this into a lesson about shrinking models.
+- The Teach cards give the same result in full precision as on the site: 5 right, "cookies" wrong.

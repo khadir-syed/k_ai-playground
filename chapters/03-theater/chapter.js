@@ -11,6 +11,7 @@ const MAX_TOKENS = 40;
 export default {
   short: 'Guessing',
   icon: '🎲',
+  python: '03_theater.py', // its twin in python/
   blurb: 'A reply guessed one piece at a time.',
   title: 'AI is a guessing machine',
   mount(root, { state, restartWith }) {

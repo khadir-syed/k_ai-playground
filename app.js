@@ -12,6 +12,7 @@ import plug from './chapters/05-plug/chapter.js';
 const CHAPTERS = [tokens, galaxy, theater];
 const BONUS = [teach, plug]; // after the story's finish screen; not part of "story-done" (docs/DESIGN.md)
 const MAX_SENTENCE = 120;
+const REPO = 'https://github.com/khadir-syed/k_ai-playground'; // python/ holds each chapter's Python twin
 
 const state = { story: null, sentence: '', preset: null, plan: null, journey: {} };
 const stage = document.getElementById('stage');
@@ -93,6 +94,9 @@ function page(chapter, eyebrow, back, [nextLabel, next]) {
     h('nav', { class: 'story-nav' },
       h('button', { class: 'ghost', onclick: back }, '← Back'),
       h('button', { class: 'primary', onclick: next }, nextLabel)),
+    h('section', { class: 'card links' },
+      h('p', { class: 'muted' }, 'For coders: this page is also a short Python program you can run on your computer.'),
+      h('a', { class: 'link-card', href: `${REPO}/blob/main/python/${chapter.python}`, rel: 'noopener noreferrer' }, '🐍 See the Python code on GitHub')),
   );
   stage.querySelector('h2').focus();
   cleanup = chapter.mount(body, { state, restartWith: usePreset }) ?? null;
@@ -243,7 +247,8 @@ function finale() {
       h('p', { class: 'muted' }, 'You finished the story. Two bonus rounds, and the museum is open.'),
       h('div', { class: 'presets' },
         BONUS.map((b, i) => h('button', { class: 'chip', onclick: () => showBonus(i) }, `${b.icon} Bonus ${i + 1}: ${b.title}`)),
-        h('button', { class: 'chip', onclick: museum }, '🏛 Open the museum: every exhibit'))),
+        h('button', { class: 'chip', onclick: museum }, '🏛 Open the museum: every exhibit')),
+      h('a', { class: 'link-card', href: `${REPO}/tree/main/python`, rel: 'noopener noreferrer' }, '🐍 For coders: all five, as Python programs')),
     shareCard(),
     h('nav', { class: 'story-nav' },
       h('button', { class: 'ghost', onclick: () => show(CHAPTERS.length - 1) }, '← Back'),

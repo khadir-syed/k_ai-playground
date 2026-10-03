@@ -47,3 +47,4 @@ flowchart LR
   bring-your-own-key with Claude.
 - **Engine used:** `chatPromptIds()` and `nextTokenOdds()` in [`engine/ai.js`](../../engine/ai.js);
   `softmax()` and `sample()` in [`engine/math.js`](../../engine/math.js).
+- **Python twin:** [`python/03_theater.py`](../../python/03_theater.py) does the same thing on your computer.

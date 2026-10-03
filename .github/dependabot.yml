@@ -1,8 +1,12 @@
-# Dependabot version updates. vendor/ is not covered: upgrade it by hand (vendor/README.md → Upgrading).
+# Dependabot version updates (tools/ npm, python/ pip, actions). vendor/ is not covered: upgrade it by hand (vendor/README.md → Upgrading).
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /tools
+    schedule:
+      interval: weekly
+  - package-ecosystem: pip
+    directory: /python
     schedule:
       interval: weekly
   - package-ecosystem: github-actions

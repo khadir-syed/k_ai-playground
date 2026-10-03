@@ -48,3 +48,4 @@ flowchart LR
   doesn't change `story-done`.
 - **Engine used:** `embed()` in [`engine/ai.js`](../../engine/ai.js); `mean()` and
   `nearestGroup()` in [`engine/math.js`](../../engine/math.js).
+- **Python twin:** [`python/04_teach.py`](../../python/04_teach.py) does the same thing on your computer.

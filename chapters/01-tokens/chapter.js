@@ -6,6 +6,7 @@ import { loadTokenizer } from '../../engine/runtime.js';
 export default {
   short: 'Tokens',
   icon: '🧩',
+  python: '01_tokens.py', // its twin in python/
   blurb: 'Your sentence, chopped into numbered pieces.',
   title: 'AI doesn’t read words',
   mount(root, { state }) {
