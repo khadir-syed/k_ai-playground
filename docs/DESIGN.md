@@ -76,6 +76,68 @@ Plus the ONNX Runtime `.wasm` file: 27 MB with WebGPU, 14 MB without. Browsers c
 | Phase | Ships | Gate to move on |
 |---|---|---|
 | **A1** ✅ | Runtime tiers, story chapters 1–3, replays, self-checks, GoatCounter, GitHub Pages workflow, share card, link preview | Works on iPhone, Android and laptop in every tier |
-| A2 | Chapter 4 "Teach a Model" (webcam), chapter 5 "Pull the Plug" (offline), museum mode, GoatCounter, GitHub Pages workflow, Python twins for the Build door | The gate above |
+| A2 | Two bonus chapters ("Teach a Model", "Pull the Plug") and museum mode. See [Phase A2 plan](#phase-a2-plan) | The gate above |
+| A2.5 | Python twins for the Build door (`python/`, not published to the site) | — |
 | C1 | Text-only Jarvis with a live step view you can pause and steer: memory (engine embeddings), reasoning (bring your own key), skills from k_ai-agent-skills | Bring-your-own-key flow passes the security checklist |
 | C2 | Tools and the finished non-technical demo | — |
+
+## Phase A2 plan
+
+Decided 2026-10-03.
+
+| Decision | Choice | Why |
+|---|---|---|
+| Story length | 3 core chapters + 2 **bonus** chapters | The story stays short, so the 40% finish gate stays fair. `story-done` still fires after chapter 3, so numbers before and after A2 compare |
+| Webcam | Dropped | Camera prompt, a new vision model and privacy questions, for a lesson sentences can teach |
+| Teach a Model | Ready-made **food / tech**, plus **your own two group names** | Ready-made works in Replay; own names are the "wow" for Local |
+| Pull the Plug | Try it on real phones first, then build what actually works | Offline behaviour differs between iOS, Android and laptops |
+| Python twins | Moved to A2.5 | Own dependencies, CI and review; nothing to do with the site |
+
+### Bonus 1: Teach a Model
+
+The visitor sorts example sentences into two groups. The AI turns each into meaning-numbers (the
+chapter 2 embedder, no new model), averages each group, and labels a new sentence by which average
+it is closer to (nearest centroid with `cosine` from `engine/math.js`). Shows both similarities as
+bars, and gets things wrong sometimes, which is part of the lesson.
+
+- **Replay:** fixed food / tech cards with embeddings recorded by `tools/record-replays.mjs`.
+- **Local:** visitor names two groups (max 20 chars each), types at least 2 examples per group and a
+  test sentence (each max 120 chars). Text stays on the device and is shown only via `textContent`.
+
+### Bonus 2: Pull the Plug
+
+Shows that the AI runs on your device: turn on airplane mode, and it keeps working.
+
+- Uses whatever is already in memory: at least the embedder (Teach a Model runs offline), plus the
+  chapter 3 model if it was loaded. Replay visitors are offered the download first (MB shown).
+- Detects the change with `navigator.onLine` and the `offline` / `online` events. No service worker.
+- **Must not reload while offline:** the page itself isn't cached, only the model files are. The
+  chapter says so.
+- Events sent while offline are lost (GoatCounter beacon fails quietly). Acceptable.
+- **To learn in the spike:** do the events fire on iOS Safari and Android Chrome in airplane mode,
+  does inference keep working, and does the Cache API serve model files offline after a reload
+  attempt.
+
+### Museum mode
+
+`#museum` lists all five chapters as exhibits. Each opens directly with a default sentence when no
+story is running, so every chapter must mount with an empty `state.journey`. Linked from the intro
+and the finish screen. The finish screen also offers the two bonus chapters.
+
+### Analytics additions
+
+`bonus-teach`, `bonus-teach-own` (visitor used own group names), `bonus-plug`, `plug-offline`
+(the offline event fired), `museum-open`. No typed text, group names or labels are ever sent.
+
+### Share card
+
+Adds a "taught it" line and an "ran offline" badge, only when the visitor did those.
+
+### Build order
+
+1. Pull the Plug spike on real phones (throwaway, not committed).
+2. Chapters mount on their own (default sentence, empty `journey`), with a test.
+3. Bonus 1, Teach a Model, + recorded replay data.
+4. Bonus 2, Pull the Plug, from what the spike showed.
+5. Museum mode, finish-screen bonus links.
+6. Share card, analytics events, chapter READMEs, this file, security checklist. Then review and push.
