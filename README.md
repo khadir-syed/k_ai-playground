@@ -27,6 +27,7 @@ Part of the k_ai series:
 | | Chapter | What you see | Tiers |
 |---|---|---|---|
 | B1 | [You can teach an AI](chapters/04-teach/) | Sort examples into two groups, then watch it guess new ones. Name your own groups on your device | Replay · Local |
+| B2 | [Pull the plug](chapters/05-plug/) | Turn on airplane mode, and the AI on your device keeps answering | Local |
 
 At the end of the story, you get a picture of **your sentence's journey** to share or save. It's made on your
 device and nothing is uploaded.

@@ -7,9 +7,10 @@ import tokens from './chapters/01-tokens/chapter.js';
 import galaxy from './chapters/02-galaxy/chapter.js';
 import theater from './chapters/03-theater/chapter.js';
 import teach from './chapters/04-teach/chapter.js';
+import plug from './chapters/05-plug/chapter.js';
 
 const CHAPTERS = [tokens, galaxy, theater];
-const BONUS = [teach]; // after the story's finish screen; not part of "story-done" (docs/DESIGN.md)
+const BONUS = [teach, plug]; // after the story's finish screen; not part of "story-done" (docs/DESIGN.md)
 const MAX_SENTENCE = 120;
 
 const state = { story: null, sentence: '', preset: null, plan: null, journey: {} };

@@ -6,7 +6,7 @@ import { embed } from '../../engine/ai.js';
 import { loadEmbedder, isReady } from '../../engine/runtime.js';
 import { countEvent } from '../../engine/analytics.js';
 
-const LABEL = { food: '🍕 Food', tech: '💻 Tech' };
+export const LABEL = { food: '🍕 Food', tech: '💻 Tech' };
 const ICON = { food: '🍕', tech: '💻' };
 const MIN_EACH = 2;
 const MAX_NAME = 20, MAX_TEXT = 120, MAX_EXAMPLES = 8;
@@ -71,7 +71,7 @@ export default {
 // Bars show closeness on a fixed scale (0.5 similarity fills the bar), so "far from both" looks
 // short. No numbers on screen: they'd read as "% sure", which they aren't (see docs/DESIGN.md).
 const FULL_BAR = 0.5;
-function showVerdict(text, { ranked, closeCall, far }, label) {
+export function showVerdict(text, { ranked, closeCall, far }, label) {
   return h('div', { class: 'notice' },
     h('p', {}, `“${text}”`),
     h('p', {}, h('strong', {}, `The AI says: ${label(ranked[0].name)}`), far ? ' (a wild guess: it isn’t close to either group)' : closeCall ? ' (a close call)' : ' (a clear call)'),
