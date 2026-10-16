@@ -7,6 +7,6 @@
     "record": "node record-replays.mjs"
   },
   "dependencies": {
-    "@huggingface/transformers": "4.3.0"
+    "@huggingface/transformers": "4.3.1"
   }
 }
