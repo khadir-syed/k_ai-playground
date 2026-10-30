@@ -1,5 +1,5 @@
 # Exact versions, so everyone runs the same code. Checked with pip-audit (SECURITY_CHECKLIST.md).
-transformers==5.18.0
+transformers==5.21.0
 torch==2.14.1
 onnxruntime==1.30.0
 numpy==2.5.3
